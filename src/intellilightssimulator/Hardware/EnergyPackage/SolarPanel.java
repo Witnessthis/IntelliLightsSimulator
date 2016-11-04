@@ -11,13 +11,19 @@ package intellilightssimulator.Hardware.EnergyPackage;
  */
 public class SolarPanel {
     
-    private final int chargeRate;
+    private final float Vmpp;
+    private final float Impp;
+    private final int XDimensions;
+    private final int YDimensions;
     
-    public SolarPanel(int chargeRate){
-        this.chargeRate = chargeRate;
+    public SolarPanel(float Vmpp, float Impp, int XDimensions, int YDimensions ){
+        this.Vmpp = Vmpp;
+        this.Impp = Impp;
+        this.XDimensions = XDimensions;
+        this.YDimensions = YDimensions;
     }
     
-    public int getChargeRate() {
-        return chargeRate;
+    public int getCharge(int startTime, int endTime) {
+        return 1; //calculation for time-period here.
     }
 }

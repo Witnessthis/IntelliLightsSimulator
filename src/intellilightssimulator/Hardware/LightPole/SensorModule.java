@@ -9,11 +9,11 @@ package intellilightssimulator.Hardware.LightPole;
  *
  * @author emilj
  */
-public class MCU {
+public class SensorModule {
     
     private final int powerConsumption;
 
-    public MCU(int powerConsumption){
+    public SensorModule(int powerConsumption){
         this.powerConsumption = powerConsumption;
     }
     
