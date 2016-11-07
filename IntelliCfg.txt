@@ -1,0 +1,34 @@
+#############################
+#                           #
+#   IntelliLights Config    #
+#                           #
+#############################
+
+#   Parameters:
+#
+#   solarPanelDimensionXmm
+#   solarPanelDimensionYmm
+#   Vmpp
+#   Impp
+#   batteryCapacity
+#   sensorModuleEnergyCost
+#   ledEnergyCost
+#
+#
+#   Format:
+#
+#   Parameter Value
+#
+#
+#   Command Line Arguments:
+#
+#   java -jar path\IntelliLightsSimulator.jar "path\IntelliCfg.txt"
+#
+
+solarPanelDimensionXmm   1
+solarPanelDimensionYmm   2
+Vmpp                     3
+Impp                     4
+batteryCapacity          5
+sensorModuleEnergyCost   6
+ledEnergyCost            7
