@@ -11,13 +11,13 @@ package intellilightssimulator.Hardware.LightPole;
  */
 public class SensorModule {
     
-    private final int powerConsumption;
+    private final double powerConsumption;
 
-    public SensorModule(int powerConsumption){
+    public SensorModule(double powerConsumption){
         this.powerConsumption = powerConsumption;
     }
     
-    public int getPowerConsumption() {
+    public double getPowerConsumption() {
         return powerConsumption;
     }
 }

@@ -6,14 +6,16 @@
 
 #   Parameters:
 #
-#   solarPanelDimensionXmm
-#   solarPanelDimensionYmm
-#   Vmpp
-#   Impp
-#   batteryCapacity
-#   sensorModuleEnergyCost
-#   ledEnergyCost
-#
+#   solarPanelDimensionXmm  (int)
+#   solarPanelDimensionYmm  (int)
+#   Vmpp                    (double)
+#   Impp                    (double)
+#   batteryCapacity         (double)
+#   sensorModuleEnergyCost  (double)
+#   ledEnergyCost           (int)
+#   nightDuration           (int)
+#   speedLimit              (int)
+#   LEDVoltage              (int)
 #
 #   Format:
 #
@@ -27,8 +29,11 @@
 
 solarPanelDimensionXmm   1
 solarPanelDimensionYmm   2
-Vmpp                     3
-Impp                     4
-batteryCapacity          5
-sensorModuleEnergyCost   6
+Vmpp                     3.0
+Impp                     4.0
+batteryCapacity          5.0
+sensorModuleEnergyCost   6.0
 ledEnergyCost            7
+nightDuration            8
+speedLimit               9
+LEDVoltage               10

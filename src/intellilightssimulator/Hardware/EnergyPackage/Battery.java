@@ -12,18 +12,18 @@ package intellilightssimulator.Hardware.EnergyPackage;
 public class Battery {
     
     //private final int chargeRate;
-    private final int batteryCapacity;
+    private final double batteryCapacity;
     //private final int energyLossRatio; //?
-    private int batteryCharge;
+    private double batteryCharge;
 
-    public Battery(/*int chargeRate, */int batteryCapacity/*, int energyLossRatio*/){
+    public Battery(/*int chargeRate, */double batteryCapacity/*, int energyLossRatio*/){
         //this.chargeRate = chargeRate;
         this.batteryCapacity = batteryCapacity;
         //this.energyLossRatio = energyLossRatio;
         this.batteryCharge = 0;
     }
     
-    public int getBatteryCharge() {
+    public double getBatteryCharge() {
         return batteryCharge;
     }
     

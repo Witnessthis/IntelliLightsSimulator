@@ -12,12 +12,18 @@ package intellilightssimulator.Hardware.LightPole;
 public class LED {
 
     private final int powerConsumption;
-
-    public LED(int powerConsumption) {
+    private final int voltage;
+    
+    public LED(int powerConsumption, int voltage) {
         this.powerConsumption = powerConsumption;
+        this.voltage = voltage;
     }
     
     public int getPowerConsumption() {
         return powerConsumption;
+    }
+    
+    public int getVoltage() {
+        return voltage;
     }
 }

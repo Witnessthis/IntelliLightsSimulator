@@ -23,10 +23,13 @@ public class IntelliLightsSimulator {
         
         int solarPanelDimensionXmm = 0;
         int solarPanelDimensionYmm = 0;
-        float Vmpp = 0, Impp = 0;
-        int batteryCapacity = 0;
-        int sensorModuleEnergyCost = 0;
+        double Vmpp = 0, Impp = 0;
+        double batteryCapacity = 0;
+        double sensorModuleEnergyCost = 0;
         int ledEnergyCost = 0;
+        int nightDuration = 0;
+        int speedLimit = 0;
+        int LEDVoltage = 0;
         
         BufferedReader br = null;
         String control = "";
@@ -48,6 +51,8 @@ public class IntelliLightsSimulator {
                 parameters = sCurrentLine.split("\\s+");
                 control = parameters[0];
                 
+                System.out.println(control + " : " + parameters[1]);
+                
                 switch(control){
                     case "solarPanelDimensionXmm":
                         solarPanelDimensionXmm = Integer.parseInt(parameters[1]);
@@ -56,19 +61,28 @@ public class IntelliLightsSimulator {
                         solarPanelDimensionYmm = Integer.parseInt(parameters[1]);
                         break;
                     case "Vmpp":
-                        Vmpp = Integer.parseInt(parameters[1]);
+                        Vmpp = Double.parseDouble(parameters[1]);
                         break;
                     case "Impp":
-                        Impp = Integer.parseInt(parameters[1]);
+                        Impp = Double.parseDouble(parameters[1]);
                         break;
                     case "batteryCapacity":
-                        batteryCapacity = Integer.parseInt(parameters[1]);
+                        batteryCapacity = Double.parseDouble(parameters[1]);
                         break;
                     case "sensorModuleEnergyCost":
-                        sensorModuleEnergyCost = Integer.parseInt(parameters[1]);
+                        sensorModuleEnergyCost = Double.parseDouble(parameters[1]);
                         break;
                     case "ledEnergyCost":
                         ledEnergyCost = Integer.parseInt(parameters[1]);
+                        break;
+                    case "nightDuration":
+                        nightDuration = Integer.parseInt(parameters[1]);
+                        break;
+                    case "speedLimit":
+                        speedLimit = Integer.parseInt(parameters[1]);
+                        break;
+                    case "LEDVoltage":
+                        LEDVoltage = Integer.parseInt(parameters[1]);
                         break;
                     default:
                         break;
@@ -90,7 +104,10 @@ public class IntelliLightsSimulator {
                             Vmpp, Impp,
                             batteryCapacity,
                             sensorModuleEnergyCost,
-                            ledEnergyCost);
+                            ledEnergyCost,
+                            nightDuration,
+                            speedLimit,
+                            LEDVoltage);
         env.runSimulation(); //does nothing at the moment.
     }
     
