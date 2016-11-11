@@ -38,8 +38,8 @@ public class IntelliLightsSimulator {
             
             while((sCurrentLine = br.readLine()) != null){
                 
-                if(sCurrentLine.equals("\r\n") || sCurrentLine.equals("\n\r")|| sCurrentLine.equals("\n") || sCurrentLine.equals("\r"))
-                    continue;
+//                if(sCurrentLine.equals("\r\n") || sCurrentLine.equals("\n\r")|| sCurrentLine.equals("\n") || sCurrentLine.equals("\r"))
+//                    continue;
                 if(sCurrentLine.equals("") ||
                     sCurrentLine.charAt(0) == '#'
                     )
