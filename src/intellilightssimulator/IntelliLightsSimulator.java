@@ -24,16 +24,41 @@ public class IntelliLightsSimulator {
         int solarPanelDimensionXmm = 0;
         int solarPanelDimensionYmm = 0;
         double Vmpp = 0, Impp = 0;
-        double batteryCapacity = 0;
-        double sensorModuleEnergyCost = 0;
-        int ledEnergyCost = 0;
-        int nightDuration = 0;
-        int speedLimit = 0;
-        int LEDVoltage = 0;
+        double sensorModuleEnergyCostMin = 0;
+        double sensorModuleEnergyCostMax = 0;
+        int ledEnergyCostMin = 0;
+        int ledEnergyCostMax = 0;
+        int LEDVoltageMin = 0;
+        int LEDVoltageMax = 0;
+        int startTimeHours = 0;
+        int startTimeMinutes = 0;
+        int stopTimeHours = 0;
+        int stopTimeMinutes = 0;
+        int speedLimitMin = 0;
+        int speedLimitMax = 0;
+        int amountOfCarsMin = 0;
+        int amountOfCarsMax = 0;
+        int amountOfPolesMin = 0;
+        int amountOfPolesMax = 0;
+        double longitude = 0;
+        double latitude = 0;
+        double jan = 0;
+        double feb = 0;
+        double mar = 0;
+        double apr = 0;
+        double may = 0;
+        double jun = 0;
+        double jul = 0;
+        double aug = 0;
+        double sep = 0;
+        double oct = 0;
+        double nov = 0;
+        double dec = 0;
         
         BufferedReader br = null;
         String control = "";
         String[] parameters;
+        String[] vals;
         
         try{
             String sCurrentLine;
@@ -50,75 +75,125 @@ public class IntelliLightsSimulator {
                 
                 parameters = sCurrentLine.split("\\s+");
                 control = parameters[0];
-                
-                System.out.println(control + " : " + parameters[1]);
-                
+
                 switch(control){
                     case "solarPanelDimension":
-                        solarPanelDimensionXmm = Integer.parseInt(parameters[1]);
+                        vals = parameters[1].split(":");
+                        solarPanelDimensionXmm = Integer.parseInt(vals[0]);
+                        solarPanelDimensionYmm = Integer.parseInt(vals[1]);
+                        System.out.println(control + " : " + solarPanelDimensionXmm + ":" + solarPanelDimensionYmm);
                         break;
                     case "Vmpp":
                         Vmpp = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + Vmpp);
                         break;
                     case "Impp":
                         Impp = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + Impp);
                         break;
                     case "sensorModuleEnergyCost":
-                        sensorModuleEnergyCost = Double.parseDouble(parameters[1]);
+                        vals = parameters[1].split(":");
+                        sensorModuleEnergyCostMin = Double.parseDouble(vals[0]);
+                        sensorModuleEnergyCostMax = Double.parseDouble(vals[1]);
+                        System.out.println(control + " : " + sensorModuleEnergyCostMin + ":" + sensorModuleEnergyCostMax);
                         break;
                     case "ledEnergyCost":
-                        ledEnergyCost = Integer.parseInt(parameters[1]);
+                        vals = parameters[1].split(":");
+                        ledEnergyCostMin = Integer.parseInt(vals[0]);
+                        ledEnergyCostMax = Integer.parseInt(vals[1]);
+                        System.out.println(control + " : " + ledEnergyCostMin + ":" + ledEnergyCostMax);
                         break;
                     case "LEDVoltage":
-                        LEDVoltage = Integer.parseInt(parameters[1]);
+                        vals = parameters[1].split(":");
+                        LEDVoltageMin = Integer.parseInt(vals[0]);
+                        LEDVoltageMax = Integer.parseInt(vals[1]);
+                        System.out.println(control + " : " + LEDVoltageMin + ":" + LEDVoltageMax);
                         break;
                     case "nightDuration":
-                        nightDuration = Integer.parseInt(parameters[1]);
+                        String[] start;
+                        String[] stop;
+                        vals = parameters[1].split(":");
+                        start = vals[0].split("-");
+                        stop = vals[1].split("-");
+                        startTimeHours = Integer.parseInt(start[0]);
+                        startTimeMinutes = Integer.parseInt(start[1]);
+                        stopTimeHours = Integer.parseInt(stop[0]);
+                        stopTimeMinutes = Integer.parseInt(stop[1]);
+                        System.out.println(control + " : " + startTimeHours + "-" + startTimeMinutes + ":" + stopTimeHours + "-" + stopTimeMinutes);
                         break;
                     case "speedLimit":
-                        speedLimit = Integer.parseInt(parameters[1]);
+                        vals = parameters[1].split(":");
+                        speedLimitMin = Integer.parseInt(vals[0]);
+                        speedLimitMax = Integer.parseInt(vals[1]);
+                        System.out.println(control + " : " + speedLimitMin + ":" + speedLimitMax);
                         break;
                     case "amountOfCars":
-                        solarPanelDimensionXmm = Integer.parseInt(parameters[1]);
+                        vals = parameters[1].split(":");
+                        amountOfCarsMin = Integer.parseInt(vals[0]);
+                        amountOfCarsMax = Integer.parseInt(vals[1]);
+                        System.out.println(control + " : " + amountOfCarsMin + ":" + amountOfCarsMax);
                         break;
                     case "amountOfPoles":
-                        solarPanelDimensionYmm = Integer.parseInt(parameters[1]);
+                        vals = parameters[1].split(":");
+                        amountOfPolesMin = Integer.parseInt(vals[0]);
+                        amountOfPolesMax = Integer.parseInt(vals[1]);
+                        System.out.println(control + " : " + amountOfPolesMin + ":" + amountOfPolesMax);
+                        break;
+                    case "longitude":
+                        longitude = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + longitude);
+                        break;
+                    case "latitude":
+                        latitude = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + latitude);
                         break;
                     case "jan":
-                        Vmpp = Double.parseDouble(parameters[1]);
+                        jan = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + jan);
                         break;
                     case "feb":
-                        Impp = Double.parseDouble(parameters[1]);
+                        feb = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + feb);
                         break;
                     case "mar":
-                        batteryCapacity = Double.parseDouble(parameters[1]);
+                        mar = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + mar);
                         break;
                     case "apr":
-                        sensorModuleEnergyCost = Double.parseDouble(parameters[1]);
+                        apr = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + apr);
                         break;
                     case "may":
-                        ledEnergyCost = Integer.parseInt(parameters[1]);
+                        may = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + may);
                         break;
                     case "jun":
-                        nightDuration = Integer.parseInt(parameters[1]);
+                        jun = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + jun);
                         break;
                     case "jul":
-                        speedLimit = Integer.parseInt(parameters[1]);
+                        jul = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + jul);
                         break;
                     case "aug":
-                        LEDVoltage = Integer.parseInt(parameters[1]);
+                        aug = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + aug);
                         break;
                     case "sep":
-                        solarPanelDimensionXmm = Integer.parseInt(parameters[1]);
+                        sep = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + sep);
                         break;
                     case "oct":
-                        solarPanelDimensionYmm = Integer.parseInt(parameters[1]);
+                        oct = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + oct);
                         break;
                     case "nov":
-                        Vmpp = Double.parseDouble(parameters[1]);
+                        nov = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + nov);
                         break;
                     case "dec":
-                        Impp = Double.parseDouble(parameters[1]);
+                        dec = Double.parseDouble(parameters[1]);
+                        System.out.println(control + " : " + dec);
                         break;
                     default:
                         break;
@@ -135,16 +210,40 @@ public class IntelliLightsSimulator {
         }
         
         Environment env = new Environment();
-        env.initEnvironment(solarPanelDimensionXmm,
+        env.initSimulation(solarPanelDimensionXmm,
                             solarPanelDimensionYmm,
                             Vmpp, Impp,
-                            batteryCapacity,
-                            sensorModuleEnergyCost,
-                            ledEnergyCost,
-                            nightDuration,
-                            speedLimit,
-                            LEDVoltage);
+                            sensorModuleEnergyCostMin,
+                            sensorModuleEnergyCostMax,
+                            ledEnergyCostMin,
+                            ledEnergyCostMax,
+                            LEDVoltageMin,
+                            LEDVoltageMax,
+                            startTimeHours,
+                            startTimeMinutes,
+                            stopTimeHours,
+                            stopTimeMinutes,
+                            speedLimitMin,
+                            speedLimitMax,
+                            amountOfCarsMin,
+                            amountOfCarsMax,
+                            amountOfPolesMin,
+                            amountOfPolesMax,
+                            longitude,
+                            latitude,
+                            jan,
+                            feb,
+                            mar,
+                            apr,
+                            may,
+                            jun,
+                            jul,
+                            aug,
+                            sep,
+                            oct,
+                            nov,
+                            dec
+                            );
         env.runSimulation(); //does nothing at the moment.
     }
-    
 }

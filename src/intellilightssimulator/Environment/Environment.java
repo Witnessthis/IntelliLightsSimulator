@@ -25,31 +25,82 @@ public class Environment {
     private SolarPanel solarPanel;
     private SensorModule sensorModule;
     private LED led;
-    
-    private int ticks;
-    private int speedLimit;
+
     private int lightPoleDistance;
+    private double speedLimit;
+    
+    private int solarPanelDimensionXmm;
+    private int solarPanelDimensionYmm;
+    private double Vmpp, Impp;
+    private double sensorModuleEnergyCostMin;
+    private double sensorModuleEnergyCostMax;
+    private int ledEnergyCostMin;
+    private int ledEnergyCostMax;
+    private int LEDVoltageMin;
+    private int LEDVoltageMax;
+    private int startTimeHours;
+    private int startTimeMinutes;
+    private int stopTimeHours;
+    private int stopTimeMinutes;
+    private int speedLimitMin;
+    private int speedLimitMax;
+    private int amountOfCarsMin;
+    private int amountOfCarsMax;
+    private int amountOfPolesMin;
+    private int amountOfPolesMax;
+    private double longitude;
+    private double latitude;
+    private double jan;
+    private double feb;
+    private double mar;
+    private double apr;
+    private double may;
+    private double jun;
+    private double jul;
+    private double aug;
+    private double sep;
+    private double oct;
+    private double nov;
+    private double dec;
     
     public Environment() {
     }
     
-    public void initEnvironment(int solarPanelDimensionXmm, 
+    public void initSimulation(int solarPanelDimensionXmm, 
                                 int solarPanelDimensionYmm, 
                                 double Vmpp, double Impp,
-                                double batteryCapacity,
-                                double sensorModuleEnergyCost, //total cost of the sensor module: MCU, transciever, sensor
-                                int ledEnergyCost,
-                                int nightDuration,
-                                int speedLimit,
-                                int LEDVoltage
+                                double sensorModuleEnergyCostMin,
+                                double sensorModuleEnergyCostMax,
+                                int ledEnergyCostMin,
+                                int ledEnergyCostMax,
+                                int LEDVoltageMin,
+                                int LEDVoltageMax,
+                                int startTimeHours,
+                                int startTimeMinutes,
+                                int stopTimeHours,
+                                int stopTimeMinutes,
+                                int speedLimitMin,
+                                int speedLimitMax,
+                                int amountOfCarsMin,
+                                int amountOfCarsMax,
+                                int amountOfPolesMin,
+                                int amountOfPolesMax,
+                                double longitude,
+                                double latitude,
+                                double jan,
+                                double feb,
+                                double mar,
+                                double apr,
+                                double may,
+                                double jun,
+                                double jul,
+                                double aug,
+                                double sep,
+                                double oct,
+                                double nov,
+                                double dec
                                 ){
-        battery = new Battery(batteryCapacity);
         solarPanel = new SolarPanel(Vmpp, Impp, solarPanelDimensionXmm, solarPanelDimensionYmm);
-        sensorModule = new SensorModule(sensorModuleEnergyCost);
-        led = new LED(ledEnergyCost, LEDVoltage);
-
-        this.speedLimit = speedLimit;
-        calculateTicks(nightDuration);
         
         //set lightPoleDistance in roadConfiguration initialization
         
@@ -58,18 +109,11 @@ public class Environment {
     
     public void runSimulation(){
         
-        for(int i = 0; i < this.ticks; i++){
-            
-            // simulate one night
-            
-        }
-    }
-    
-    public void calculateTicks(int nightDuration){
-        
-        //calculate amount of ticks based on night duration.
-        
-        this.ticks = 0;
+//        for(int i = 0; i < this.ticks; i++){
+//            
+//            // simulate one night
+//            
+//        }
     }
     
     public double calcLedConsumption(){

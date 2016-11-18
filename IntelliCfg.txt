@@ -7,9 +7,9 @@
 #   Parameters:
 #
 #   solarPanelDimension     x:y                         (int)
-#   Vmpp                    val                         (float)
-#   Impp                    val                         (float)
-#   sensorModuleEnergyCost  min:max                     (float)
+#   Vmpp                    val                         (double)
+#   Impp                    val                         (double)
+#   sensorModuleEnergyCost  min:max                     (double)
 #   ledEnergyCost           min:max                     (int)
 #   LEDVoltage              min:max                     (int)
 #   nightDuration           HH.MM:HH.MM start:stop      (int)
@@ -19,21 +19,21 @@
 #   
 #   #Average irradiation for each month based on CM SAF database (http://re.jrc.ec.europa.eu/pvgis/apps4/pvest.php#)
 #
-#   jan                     val                         (float)
-#   feb                     val                         (float)
-#   mar                     val                         (float)
-#   apr                     val                         (float)
-#   may                     val                         (float)
-#   jun                     val                         (float)
-#   jul                     val                         (float)
-#   aug                     val                         (float)
-#   sep                     val                         (float)
-#   oct                     val                         (float)
-#   nov                     val                         (float)
-#   dec                     val                         (float)
+#   jan                     val                         (double)
+#   feb                     val                         (double)
+#   mar                     val                         (double)
+#   apr                     val                         (double)
+#   may                     val                         (double)
+#   jun                     val                         (double)
+#   jul                     val                         (double)
+#   aug                     val                         (double)
+#   sep                     val                         (double)
+#   oct                     val                         (double)
+#   nov                     val                         (double)
+#   dec                     val                         (double)
 #
-#   longitude               val                         (float)
-#   latitude                val                         (float)
+#   longitude               val                         (double)
+#   latitude                val                         (double)
 
 
 #   Format:
@@ -52,23 +52,23 @@ Impp                        4.0
 sensorModuleEnergyCost      5.0:6.0
 ledEnergyCost               7:8
 LEDVoltage                  9:10
-nightDuration               11.12:13.14
+nightDuration               11-12:13-14
 speedLimit                  15:16
 amountOfCars                17:18
 amountOfPoles               19:20
 
-jan                         21
-feb                         22
-mar                         23
-apr                         24
-may                         25
-jun                         26
-jul                         27
-aug                         28
-sep                         29
-oct                         30
-nov                         31
-dec                         32
+jan                         21.0
+feb                         22.0
+mar                         23.0
+apr                         24.0
+may                         25.0
+jun                         26.0
+jul                         27.0
+aug                         28.0
+sep                         29.0
+oct                         30.0
+nov                         31.0
+dec                         32.0
 
-longitude                   33
-latitude                    34
+longitude                   33.0
+latitude                    34.0
