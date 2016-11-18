@@ -54,11 +54,8 @@ public class IntelliLightsSimulator {
                 System.out.println(control + " : " + parameters[1]);
                 
                 switch(control){
-                    case "solarPanelDimensionXmm":
+                    case "solarPanelDimension":
                         solarPanelDimensionXmm = Integer.parseInt(parameters[1]);
-                        break;
-                    case "solarPanelDimensionYmm":
-                        solarPanelDimensionYmm = Integer.parseInt(parameters[1]);
                         break;
                     case "Vmpp":
                         Vmpp = Double.parseDouble(parameters[1]);
@@ -66,14 +63,14 @@ public class IntelliLightsSimulator {
                     case "Impp":
                         Impp = Double.parseDouble(parameters[1]);
                         break;
-                    case "batteryCapacity":
-                        batteryCapacity = Double.parseDouble(parameters[1]);
-                        break;
                     case "sensorModuleEnergyCost":
                         sensorModuleEnergyCost = Double.parseDouble(parameters[1]);
                         break;
                     case "ledEnergyCost":
                         ledEnergyCost = Integer.parseInt(parameters[1]);
+                        break;
+                    case "LEDVoltage":
+                        LEDVoltage = Integer.parseInt(parameters[1]);
                         break;
                     case "nightDuration":
                         nightDuration = Integer.parseInt(parameters[1]);
@@ -81,8 +78,47 @@ public class IntelliLightsSimulator {
                     case "speedLimit":
                         speedLimit = Integer.parseInt(parameters[1]);
                         break;
-                    case "LEDVoltage":
+                    case "amountOfCars":
+                        solarPanelDimensionXmm = Integer.parseInt(parameters[1]);
+                        break;
+                    case "amountOfPoles":
+                        solarPanelDimensionYmm = Integer.parseInt(parameters[1]);
+                        break;
+                    case "jan":
+                        Vmpp = Double.parseDouble(parameters[1]);
+                        break;
+                    case "feb":
+                        Impp = Double.parseDouble(parameters[1]);
+                        break;
+                    case "mar":
+                        batteryCapacity = Double.parseDouble(parameters[1]);
+                        break;
+                    case "apr":
+                        sensorModuleEnergyCost = Double.parseDouble(parameters[1]);
+                        break;
+                    case "may":
+                        ledEnergyCost = Integer.parseInt(parameters[1]);
+                        break;
+                    case "jun":
+                        nightDuration = Integer.parseInt(parameters[1]);
+                        break;
+                    case "jul":
+                        speedLimit = Integer.parseInt(parameters[1]);
+                        break;
+                    case "aug":
                         LEDVoltage = Integer.parseInt(parameters[1]);
+                        break;
+                    case "sep":
+                        solarPanelDimensionXmm = Integer.parseInt(parameters[1]);
+                        break;
+                    case "oct":
+                        solarPanelDimensionYmm = Integer.parseInt(parameters[1]);
+                        break;
+                    case "nov":
+                        Vmpp = Double.parseDouble(parameters[1]);
+                        break;
+                    case "dec":
+                        Impp = Double.parseDouble(parameters[1]);
                         break;
                     default:
                         break;
