@@ -11,21 +11,21 @@ package intellilightssimulator.Environment;
  */
 public class Year { 
 
-    public final float jan;
-    public final float feb;
-    public final float mar;
-    public final float apr;
-    public final float may;
-    public final float jun;
-    public final float jul;
-    public final float aug;
-    public final float sep;
-    public final float oct;
-    public final float nov;
-    public final float dec;
+    public final double jan;
+    public final double feb;
+    public final double mar;
+    public final double apr;
+    public final double may;
+    public final double jun;
+    public final double jul;
+    public final double aug;
+    public final double sep;
+    public final double oct;
+    public final double nov;
+    public final double dec;
 
     
-    public Year(float jan, float feb, float mar, float apr, float may, float jun, float jul, float aug, float sep, float oct, float nov, float dec){
+    public Year(double jan, double feb, double mar, double apr, double may, double jun, double jul, double aug, double sep, double oct, double nov, double dec){
         this.jan = jan;
         this.feb = feb;
         this.mar = mar;
