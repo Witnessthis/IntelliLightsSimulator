@@ -11,66 +11,33 @@ package intellilightssimulator.Environment;
  */
 public class Year { 
 
-    public static float jan;
-    public static float feb;
-    public static float mar;
-    public static float apr;
-    public static float may;
-    public static float jun;
-    public static float jul;
-    public static float aug;
-    public static float sep;
-    public static float oct;
-    public static float nov;
-    public static float dec;
+    public final float jan;
+    public final float feb;
+    public final float mar;
+    public final float apr;
+    public final float may;
+    public final float jun;
+    public final float jul;
+    public final float aug;
+    public final float sep;
+    public final float oct;
+    public final float nov;
+    public final float dec;
 
-    public static float getJan() {
-        return jan;
-    }
-
-    public static float getFeb() {
-        return feb;
-    }
-
-    public static float getMar() {
-        return mar;
-    }
-
-    public static float getApr() {
-        return apr;
-    }
-
-    public static float getMay() {
-        return may;
-    }
-
-    public static float getJun() {
-        return jun;
-    }
-
-    public static float getJul() {
-        return jul;
-    }
-
-    public static float getAug() {
-        return aug;
-    }
-
-    public static float getSep() {
-        return sep;
-    }
-
-    public static float getOct() {
-        return oct;
-    }
-
-    public static float getNov() {
-        return nov;
-    }
-
-    public static float getDec() {
-        return dec;
-    }
     
+    public Year(float jan, float feb, float mar, float apr, float may, float jun, float jul, float aug, float sep, float oct, float nov, float dec){
+        this.jan = jan;
+        this.feb = feb;
+        this.mar = mar;
+        this.apr = apr;
+        this.may = may;
+        this.jun = jun;
+        this.jul = jul;
+        this.aug = aug;
+        this.sep = sep;
+        this.oct = oct;
+        this.nov = nov;
+        this.dec = dec;
+    }
     
 }
