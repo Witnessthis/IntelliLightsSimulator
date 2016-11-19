@@ -9,6 +9,17 @@ import intellilightssimulator.Hardware.EnergyPackage.Battery;
 import intellilightssimulator.Hardware.EnergyPackage.SolarPanel;
 import intellilightssimulator.Hardware.LightPole.LED;
 import intellilightssimulator.Hardware.LightPole.SensorModule;
+import intellilightssimulator.IntelliLightsSimulator;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -38,10 +49,7 @@ public class Environment {
     private int ledEnergyCostMax;
     private int LEDVoltageMin;
     private int LEDVoltageMax;
-    private int startTimeHours;
-    private int startTimeMinutes;
-    private int stopTimeHours;
-    private int stopTimeMinutes;
+    private String date;
     private int speedLimitMin;
     private int speedLimitMax;
     private int amountOfCarsMin;
@@ -50,6 +58,7 @@ public class Environment {
     private int amountOfPolesMax;
     private double longitude;
     private double latitude;
+    private double nightTime;
     private double jan;
     private double feb;
     private double mar;
@@ -75,10 +84,7 @@ public class Environment {
                                 int ledEnergyCostMax,
                                 int LEDVoltageMin,
                                 int LEDVoltageMax,
-                                int startTimeHours,
-                                int startTimeMinutes,
-                                int stopTimeHours,
-                                int stopTimeMinutes,
+                                String date,
                                 int speedLimitMin,
                                 int speedLimitMax,
                                 int amountOfCarsMin,
@@ -101,6 +107,10 @@ public class Environment {
                                 double dec
                                 ){
         solarPanel = new SolarPanel(Vmpp, Impp, solarPanelDimensionXmm, solarPanelDimensionYmm);
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.date = date;
+        
         
         //set lightPoleDistance in roadConfiguration initialization
         
@@ -108,6 +118,10 @@ public class Environment {
     }
     
     public void runSimulation(){
+        
+        double dayTime = lookUpDaytime(this.latitude, this.longitude, this.date);
+        this.nightTime = 1440 - dayTime;
+        System.out.println("night time: "+this.nightTime);
         
 //        for(int i = 0; i < this.ticks; i++){
 //            
@@ -151,5 +165,55 @@ public class Environment {
         return (int)(Math.random()* range) + minSpeed;
     }
     
-    
+    /**
+     * 
+     * @param latitude
+     * @param longitude
+     * @param date
+     * @return 
+     */
+    public double lookUpDaytime(double latitude, double longitude, String date) {
+
+        URL url;
+        try {
+            url = new URL("http://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&date=" + date);
+            String dayTime;
+            String[] parts;
+            double hours;
+            double minutes;
+            double seconds;
+            JSONParser parser = new JSONParser();
+            JSONObject content;
+                    
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
+                for (String line; (line = reader.readLine()) != null;) {
+                    try {
+                        content = (JSONObject)parser.parse(line);
+                        if(content.get("status").equals("OK")){
+                            JSONObject results = (JSONObject)content.get("results");
+                            dayTime = results.get("day_length").toString();
+                            parts = dayTime.split(":");
+                            
+                            hours  = Integer.parseInt(parts[0]);
+                            minutes = Integer.parseInt(parts[1]);
+                            seconds = Integer.parseInt(parts[2]);
+                            double totalMin = hours*60 + minutes + seconds/60;
+                            
+                            return totalMin;
+                        }else{
+                            System.err.println("Error");
+                            return -1;
+                        }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(IntelliLightsSimulator.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
 }

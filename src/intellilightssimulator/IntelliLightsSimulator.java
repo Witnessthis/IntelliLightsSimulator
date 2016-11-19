@@ -9,16 +9,6 @@ import intellilightssimulator.Environment.Environment;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-
 
 /**
  *
@@ -26,54 +16,7 @@ import org.json.simple.parser.ParseException;
  */
 public class IntelliLightsSimulator {
 
-    /**
-     * 
-     * @param latitude
-     * @param longitude
-     * @param date (YYYY-MM-DD)
-     */
-    public static void lookUpDaytime(double latitude, double longitude, String date) {
-
-        URL url;
-        try {
-            url = new URL("http://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&date=" + date);
-            String dayTime;
-            String[] parts;
-            int hours;
-            int minutes;
-            int seconds;
-            JSONParser parser = new JSONParser();
-            JSONObject content;
-                    
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
-                for (String line; (line = reader.readLine()) != null;) {
-                    try {
-                        content = (JSONObject)parser.parse(line);
-                        if(content.get("status").equals("OK")){
-                            JSONObject results = (JSONObject)content.get("results");
-                            dayTime = results.get("day_length").toString();
-                            
-                            parts = dayTime.split(":");
-                            
-                            hours  = Integer.parseInt(parts[0]);
-                            minutes = Integer.parseInt(parts[1]);
-                            seconds = Integer.parseInt(parts[2]);
-
-                        }else{
-                            System.err.println("Error");
-                        }
-                    } catch (ParseException ex) {
-                        Logger.getLogger(IntelliLightsSimulator.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
+       
     /**
      * @param args the command line arguments
      */
@@ -88,10 +31,6 @@ public class IntelliLightsSimulator {
         int ledEnergyCostMax = 0;
         int LEDVoltageMin = 0;
         int LEDVoltageMax = 0;
-        int startTimeHours = 0;
-        int startTimeMinutes = 0;
-        int stopTimeHours = 0;
-        int stopTimeMinutes = 0;
         int speedLimitMin = 0;
         int speedLimitMax = 0;
         int amountOfCarsMin = 0;
@@ -100,6 +39,7 @@ public class IntelliLightsSimulator {
         int amountOfPolesMax = 0;
         double longitude = 0;
         double latitude = 0;
+        String date = null;
         double jan = 0;
         double feb = 0;
         double mar = 0;
@@ -117,11 +57,6 @@ public class IntelliLightsSimulator {
         String control = "";
         String[] parameters;
         String[] vals;
-        
-        double lat = 55.483;
-        double lon = 12.164;
-        
-        lookUpDaytime(lat, lon, "2016-10-30");
 
         try{
             String sCurrentLine;
@@ -172,17 +107,9 @@ public class IntelliLightsSimulator {
                         LEDVoltageMax = Integer.parseInt(vals[1]);
                         System.out.println(control + " : " + LEDVoltageMin + ":" + LEDVoltageMax);
                         break;
-                    case "nightDuration":
-                        String[] start;
-                        String[] stop;
-                        vals = parameters[1].split(":");
-                        start = vals[0].split("-");
-                        stop = vals[1].split("-");
-                        startTimeHours = Integer.parseInt(start[0]);
-                        startTimeMinutes = Integer.parseInt(start[1]);
-                        stopTimeHours = Integer.parseInt(stop[0]);
-                        stopTimeMinutes = Integer.parseInt(stop[1]);
-                        System.out.println(control + " : " + startTimeHours + "-" + startTimeMinutes + ":" + stopTimeHours + "-" + stopTimeMinutes);
+                    case "date":
+                        date = parameters[1];
+                        System.out.println(control + " : " + date);
                         break;
                     case "speedLimit":
                         vals = parameters[1].split(":");
@@ -271,7 +198,7 @@ public class IntelliLightsSimulator {
 		ex.printStackTrace();
             }
         }
-        
+
         Environment env = new Environment();
         env.initSimulation(solarPanelDimensionXmm,
                             solarPanelDimensionYmm,
@@ -282,10 +209,7 @@ public class IntelliLightsSimulator {
                             ledEnergyCostMax,
                             LEDVoltageMin,
                             LEDVoltageMax,
-                            startTimeHours,
-                            startTimeMinutes,
-                            stopTimeHours,
-                            stopTimeMinutes,
+                            date,
                             speedLimitMin,
                             speedLimitMax,
                             amountOfCarsMin,
