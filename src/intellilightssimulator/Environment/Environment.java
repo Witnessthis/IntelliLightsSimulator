@@ -200,8 +200,14 @@ public class Environment {
                             double totalMin = hours*60 + minutes + seconds/60;
                             
                             return totalMin;
+                        }else if(content.get("status").equals("INVALID_REQUEST")){
+                            System.err.println("Error: INVALID_REQUEST");
+                            return -1;
+                        }else if(content.get("status").equals("INVALID_DATE")){
+                            System.err.println("Error: INVALID_DATE");
+                            return -1;
                         }else{
-                            System.err.println("Error");
+                            System.err.println("Error: UNKNOWN_ERROR");
                             return -1;
                         }
                     } catch (ParseException ex) {
