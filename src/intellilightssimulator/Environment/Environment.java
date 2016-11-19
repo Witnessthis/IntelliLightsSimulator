@@ -150,4 +150,6 @@ public class Environment {
         int range = (maxSpeed - minSpeed) + 1;
         return (int)(Math.random()* range) + minSpeed;
     }
+    
+    
 }
