@@ -40,16 +40,12 @@ public class Environment {
     private int lightPoleDistance;
     private double speedLimit;
     
-    private int solarPanelDimensionXmm;
-    private int solarPanelDimensionYmm;
-    private double Vmpp, Impp;
     private double sensorModuleEnergyCostMin;
     private double sensorModuleEnergyCostMax;
     private int ledEnergyCostMin;
     private int ledEnergyCostMax;
     private int LEDVoltageMin;
     private int LEDVoltageMax;
-    private String date;
     private int speedLimitMin;
     private int speedLimitMax;
     private int amountOfCarsMin;
@@ -58,6 +54,7 @@ public class Environment {
     private int amountOfPolesMax;
     private double longitude;
     private double latitude;
+    private String date;
     private double nightTime;
     private double jan;
     private double feb;
@@ -84,7 +81,6 @@ public class Environment {
                                 int ledEnergyCostMax,
                                 int LEDVoltageMin,
                                 int LEDVoltageMax,
-                                String date,
                                 int speedLimitMin,
                                 int speedLimitMax,
                                 int amountOfCarsMin,
@@ -93,6 +89,7 @@ public class Environment {
                                 int amountOfPolesMax,
                                 double longitude,
                                 double latitude,
+                                String date,
                                 double jan,
                                 double feb,
                                 double mar,
@@ -107,11 +104,36 @@ public class Environment {
                                 double dec
                                 ){
         solarPanel = new SolarPanel(Vmpp, Impp, solarPanelDimensionXmm, solarPanelDimensionYmm);
+        
+        
+        this.sensorModuleEnergyCostMin = sensorModuleEnergyCostMin;
+        this.sensorModuleEnergyCostMax = sensorModuleEnergyCostMax;
+        this.ledEnergyCostMin = ledEnergyCostMin;
+        this.ledEnergyCostMax = ledEnergyCostMax;
+        this.LEDVoltageMin = LEDVoltageMin;
+        this.LEDVoltageMax = LEDVoltageMax;
+        this.speedLimitMin = speedLimitMin;
+        this.speedLimitMax = speedLimitMax;
+        this.amountOfCarsMin = amountOfCarsMin;
+        this.amountOfCarsMax = amountOfCarsMax;
+        this.amountOfPolesMin = amountOfPolesMin;
+        this.amountOfPolesMax = amountOfPolesMax;
         this.latitude = latitude;
         this.longitude = longitude;
         this.date = date;
-        
-        
+        this.jan = jan;
+        this.feb = feb;
+        this.mar = mar;
+        this.apr = apr;
+        this.may = may;
+        this.jun = jun;
+        this.jul = jul;
+        this.aug = aug;
+        this.sep = sep;
+        this.oct = oct;
+        this.nov = nov;
+        this.dec = dec;
+
         //set lightPoleDistance in roadConfiguration initialization
         
         System.out.println("Environment Initialized");
