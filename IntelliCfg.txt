@@ -56,18 +56,26 @@ speedLimit                  15:16
 amountOfCars                17:18
 amountOfPoles               19:20
 
-jan                         21.0
-feb                         22.0
-mar                         23.0
-apr                         24.0
-may                         25.0
-jun                         26.0
-jul                         27.0
-aug                         28.0
-sep                         29.0
-oct                         30.0
-nov                         31.0
-dec                         32.0
+jan                         800.0
+feb                         800.0
+mar                         800.0
+apr                         800.0
+may                         800.0
+jun                         800.0
+jul                         800.0
+aug                         800.0
+sep                         800.0
+oct                         800.0
+nov                         800.0
+dec                         800.0
+
+mod0						800:0.0:-20.0
+mod1						600:-0.9:-40.0
+mod2						400:-2.1:-60.0
+mod3						200:-5.1:-80.0
+mod4						100:-8.7:-90.0
+
+
 
 longitude                   33.0
 latitude                    34.0
