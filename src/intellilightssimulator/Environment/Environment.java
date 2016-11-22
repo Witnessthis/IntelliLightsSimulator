@@ -105,7 +105,6 @@ public class Environment {
                                 ){
         solarPanel = new SolarPanel(Vmpp, Impp, solarPanelDimensionXmm, solarPanelDimensionYmm);
         
-        
         this.sensorModuleEnergyCostMin = sensorModuleEnergyCostMin;
         this.sensorModuleEnergyCostMax = sensorModuleEnergyCostMax;
         this.ledEnergyCostMin = ledEnergyCostMin;
