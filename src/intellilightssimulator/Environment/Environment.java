@@ -46,8 +46,8 @@ public class Environment {
     private double sensorModuleEnergyCostMax;
     private int ledEnergyCostMin;
     private int ledEnergyCostMax;
-    private int LEDVoltageMin;
-    private int LEDVoltageMax;
+    private int ledPowMin;
+    private int ledPowMax;
     private int speedLimitMin;
     private int speedLimitMax;
     private int amountOfCarsMin;
@@ -64,8 +64,8 @@ public class Environment {
                                 double sensorModuleEnergyCostMax,
                                 int ledEnergyCostMin,
                                 int ledEnergyCostMax,
-                                int LEDVoltageMin,
-                                int LEDVoltageMax,
+                                int ledPowMin,
+                                int ledPowMax,
                                 int speedLimitMin,
                                 int speedLimitMax,
                                 int amountOfCarsMin,
@@ -83,8 +83,8 @@ public class Environment {
         this.sensorModuleEnergyCostMax = sensorModuleEnergyCostMax;
         this.ledEnergyCostMin = ledEnergyCostMin;
         this.ledEnergyCostMax = ledEnergyCostMax;
-        this.LEDVoltageMin = LEDVoltageMin;
-        this.LEDVoltageMax = LEDVoltageMax;
+        this.ledPowMin = ledPowMin;
+        this.ledPowMax = ledPowMax;
         this.speedLimitMin = speedLimitMin;
         this.speedLimitMax = speedLimitMax;
         this.amountOfCarsMin = amountOfCarsMin;
@@ -102,18 +102,41 @@ public class Environment {
     }
     
     public HashMap<String, Double> runSimulation(){
-        
-        for (Double monthIrad : monthIradVals) {
-            if (monthIrad < 1000) {
-                double pmpp = calcPmpp(monthIrad);
-            }
-        }
-        
         double dayTime = lookUpDaytime(this.latitude, this.longitude, this.date);
+        double pmpp = solarPanel.getPmpp();
+        double pAvail = 0.0;
+        double pLedMax = 0.0;
+        double pLedMin = 0.0;
+        ArrayList<Double> pmppVector = getPmppVector();
+        
         this.nightTime = 1440 - dayTime;
         System.out.println("night time: " + this.nightTime);
         
         return null;
+    }
+    private ArrayList<Double> getPmppVector() {
+        ArrayList<Double> pmppVector = new ArrayList<>(12);
+        
+        for (Double monthIrad : monthIradVals) {
+            if (monthIrad < 1000) {
+                pmppVector.add(calcPmpp(monthIrad));
+            } else {
+                pmppVector.add(solarPanel.getPmpp());
+            }
+        }
+        
+        return pmppVector;
+    }
+    
+    /*
+    * Constructs the best and worst case road configurations
+    */
+    private ArrayList<ArrayList<Double>> getRoadConfigMatrix() {
+        ArrayList<ArrayList<Double>> cfgMatrix = null;
+        
+        //worst
+        
+        return cfgMatrix;
     }
     
     private double calcPmpp(double irad) {

@@ -40,8 +40,8 @@ public class IntelliLightsSimulator {
         int solarPanelDimensionYmm = 0;
         int ledEnergyCostMin = 0;
         int ledEnergyCostMax = 0;
-        int LEDVoltageMin = 0;
-        int LEDVoltageMax = 0;
+        int ledPowMin = 0;
+        int ledPowMax = 0;
         int speedLimitMin = 0;
         int speedLimitMax = 0;
         int amountOfCarsMin = 0;
@@ -110,12 +110,12 @@ public class IntelliLightsSimulator {
                     System.out.println(control + " : " + ledEnergyCostMin + ":" 
                             + ledEnergyCostMax);
                 }
-                else if (control.equals("LEDVoltage")) {
+                else if (control.equals("P_led")) {
                     vals = parameters[1].split(":");
-                    LEDVoltageMin = Integer.parseInt(vals[0]);
-                    LEDVoltageMax = Integer.parseInt(vals[1]);
-                    System.out.println(control + " : " + LEDVoltageMin + ":" 
-                            + LEDVoltageMax);
+                    ledPowMin = Integer.parseInt(vals[0]);
+                    ledPowMax = Integer.parseInt(vals[1]);
+                    System.out.println(control + " : " + ledPowMin + ":" 
+                            + ledPowMax);
                 }
                 else if (control.equals("date")) {
                     date = parameters[1];
@@ -168,7 +168,7 @@ public class IntelliLightsSimulator {
             
             env = new Environment(solarPanel, sensorModuleEnergyCostMin, 
                     sensorModuleEnergyCostMax, ledEnergyCostMin, 
-                    ledEnergyCostMax, LEDVoltageMin, LEDVoltageMax, 
+                    ledEnergyCostMax, ledPowMin, ledPowMax, 
                     speedLimitMin, speedLimitMax, amountOfCarsMin, amountOfCarsMax, 
                     amountOfPolesMin, amountOfPolesMax, longitude, latitude, 
                     date, monthIradVals);

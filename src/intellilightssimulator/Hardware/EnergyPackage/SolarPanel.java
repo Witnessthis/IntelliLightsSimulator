@@ -44,6 +44,13 @@ public class SolarPanel {
     public double getImpp() {
         return Impp;
     }
+
+     /**
+     * @return the Vmpp
+     */
+    public double getPmpp() {
+        return pmpp;
+    }
     
     public HashMap<Double, ArrayList<Double>> getIradModifiers() {
         return this.iradModifiers;
