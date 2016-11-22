@@ -49,6 +49,7 @@
 solarPanelDimension         1:2
 Vmpp                        3.0
 Impp                        4.0
+Pmpp						616
 sensorModuleEnergyCost      5.0:6.0
 ledEnergyCost               7:8
 LEDVoltage                  9:10

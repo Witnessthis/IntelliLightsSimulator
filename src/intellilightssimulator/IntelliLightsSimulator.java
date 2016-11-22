@@ -50,6 +50,7 @@ public class IntelliLightsSimulator {
         int amountOfPolesMax = 0;
         double Vmpp = 0.0;
         double Impp = 0.0;
+        double pmpp = 0.0;
         double sensorModuleEnergyCostMin = 0.0;
         double sensorModuleEnergyCostMax = 0.0;
         double longitude = 0.0;
@@ -90,6 +91,10 @@ public class IntelliLightsSimulator {
                 else if (control.equals("Impp")) {
                     Impp = Double.parseDouble(parameters[1]);
                     System.out.println(control + " : " + Impp);
+                }
+                else if (control.equals("Pmpp")) {
+                    pmpp = Double.parseDouble(parameters[1]);
+                    System.out.println(control + " : " + pmpp);
                 }
                 else if (control.equals("sensorModuleEnergyCost")) {
                     vals = parameters[1].split(":");
@@ -158,8 +163,8 @@ public class IntelliLightsSimulator {
                     System.out.println(parameters[1]);
                 }
             }
-            SolarPanel solarPanel = new SolarPanel(Vmpp, Impp, solarPanelDimensionXmm, 
-                solarPanelDimensionYmm, iradModifiers);
+            SolarPanel solarPanel = new SolarPanel(Vmpp, Impp, pmpp, 
+                    solarPanelDimensionXmm, solarPanelDimensionYmm, iradModifiers);
             
             env = new Environment(solarPanel, sensorModuleEnergyCostMin, 
                     sensorModuleEnergyCostMax, ledEnergyCostMin, 

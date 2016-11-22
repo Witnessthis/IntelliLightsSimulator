@@ -106,7 +106,6 @@ public class Environment {
         for (Double monthIrad : monthIradVals) {
             if (monthIrad < 1000) {
                 double pmpp = calcPmpp(monthIrad);
-                
             }
         }
         
