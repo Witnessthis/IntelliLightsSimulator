@@ -57,7 +57,7 @@ public class IntelliLightsSimulator {
         Environment env = null;
         
         BufferedReader br = null;
-        String control = "";
+        String control;
         String[] parameters;
         String[] vals;
 
