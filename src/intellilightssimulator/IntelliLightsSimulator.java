@@ -27,7 +27,8 @@ public class IntelliLightsSimulator {
      */
     public static void main(String[] args) {
         Environment env = getEnvFromConfig(args[0]);
-        env.runSimulation(); //does nothing at the moment.
+        LinkedHashMap<String, Double> simResults = env.runSimulation();
+        env.writeLog(simResults);
     }
     
      /**

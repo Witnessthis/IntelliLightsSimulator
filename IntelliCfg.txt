@@ -46,28 +46,28 @@
 #   java -jar path\IntelliLightsSimulator.jar "path\IntelliCfg.txt"
 #
 
-vmpp                        3.0
-impp                        4.0
-pmpp						616
-sensorModuleWatts      		5.0:6.0
-ledWatts					9:10
-speedLimit                  15:16
-amountOfCars                17:18
-amountOfPoles               19:20
-poleSpacing					303.245
+vmpp                        24.40
+impp                        8.10
+pmpp						200.
+sensorModuleWatts      		0.0:0.0
+ledWatts					50:60
+speedLimit                  50:60
+amountOfCars                200:300
+amountOfPoles               20:30
+poleSpacing					0.01
 
-jan                         800.0
-feb                         800.0
-mar                         800.0
-apr                         800.0
-may                         800.0
-jun                         800.0
-jul                         800.0
-aug                         800.0
-sep                         800.0
-oct                         800.0
-nov                         800.0
-dec                         800.0
+jan                         1060.0
+feb                         1720.0
+mar                         4060.0
+apr                         5560.0
+may                         5880.0
+jun                         6010.0
+jul                         5820.0
+aug                         5100.0
+sep                         4220.0
+oct                         2600.0
+nov                         1120.0
+dec                         750.0
 
 pmppMod0					800:0.0:-20.0
 pmppMod1					600:-0.9:-40.0
@@ -77,5 +77,5 @@ pmppMod4					100:-8.7:-90.0
 
 
 
-longitude                   33.0
-latitude                    34.0
+longitude                   12.3117
+latitude                    55.475

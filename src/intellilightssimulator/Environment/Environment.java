@@ -10,24 +10,30 @@ import intellilightssimulator.Hardware.EnergyPackage.SolarPanel;
 import intellilightssimulator.Hardware.LightPole.LED;
 import intellilightssimulator.Hardware.LightPole.SensorModule;
 import intellilightssimulator.IntelliLightsSimulator;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import java.text.SimpleDateFormat;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -109,6 +115,7 @@ public class Environment {
     
     public LinkedHashMap<String, Double> runSimulation(){
         double pmpp = solarPanel.getPmpp();
+        LinkedHashMap<String, Double> results = new LinkedHashMap<>();
         
         for (String month : monthIradVals.keySet()) {
             double monthIrad = monthIradVals.get(month);
@@ -118,17 +125,37 @@ public class Environment {
             }
             double dayTime = lookUpDaytime(this.latitude, this.longitude, 
                     firstDayOfMonth(month));
+            //corresponds to P_avail in the formula pdf (without battery modifier)
             double availWatts = dayTime * pmpp / 60;
             
-            //calcConsumption(ledPowMax, amountOfPolesMax, SPACING, speedLimitMin, ledPowMax)
+            //worst case most poles (max led power, most cars, slowest cars)
+            double worstCaseMaxPoles = calcConsumption(ledPowMax, amountOfPolesMax, poleSpacing, 
+                    speedLimitMin, amountOfCarsMax);
+            //worst case most poles (max led power, most cars, slowest cars)
+            double bestCaseMaxPoles = calcConsumption(ledPowMin, amountOfPolesMax, poleSpacing, 
+                    speedLimitMax, amountOfCarsMin);
+            //worst case most poles (max led power, most cars, slowest cars)
+            double worstCaseMinPoles = calcConsumption(ledPowMax, amountOfPolesMin, poleSpacing, 
+                    speedLimitMin, amountOfCarsMax);
+            //worst case most poles (max led power, most cars, slowest cars)
+            double bestCaseMinPoles = calcConsumption(ledPowMin, amountOfPolesMin, poleSpacing, 
+                    speedLimitMax, amountOfCarsMin);
+            
+            results.put(month + " worstCaseMaxPoles ", availWatts - worstCaseMaxPoles);
+            results.put(month + " bestCaseMaxPoles ", availWatts - bestCaseMaxPoles);
+            results.put(month + " worstCaseMinPoles ", availWatts - worstCaseMinPoles);
+            results.put(month + " bestCaseMinPoles ", availWatts - bestCaseMinPoles);
         }
         
 //        this.nightTime = 1440 - dayTime;
 //        System.out.println("night time: " + this.nightTime);
         
-        return null;
+        return results;
     }
     
+    /*
+    * corresponds to P_led(max/min) in the formula pdf
+    */
     private double calcConsumption(double ledWatts, int noOfLeds, double ledSpacing,
             int carSpeed, int noOfCars) {
         double onTimePerCar = ledSpacing 
@@ -262,12 +289,13 @@ public class Environment {
     
     /**
      * For demonstration purposes only
+     * @param data
      */
-    public void printLog() {
+    public void writeLog(LinkedHashMap<String, Double> data) {
 
-        for (int i = 0; i < 11; i++) {
-            appendToLog("Count: " + i + "\r\n", this.filePath);
-        }
+        data.entrySet().forEach((_item) -> {
+            appendToLog(_item.toString(), this.filePath);
+        });
     }
 
     /**
@@ -292,6 +320,7 @@ public class Environment {
             }
             fw = new FileWriter(file.getAbsoluteFile(), true);
             fw.write(message);
+            fw.write("\n");
             fw.close();
         } catch (IOException ex) {
             ex.printStackTrace();
