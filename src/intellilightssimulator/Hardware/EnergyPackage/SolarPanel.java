@@ -16,18 +16,13 @@ public class SolarPanel {
     private final double Vmpp;
     private final double Impp;
     private final double pmpp;
-    private final int XDimensions;
-    private final int YDimensions;
     private final HashMap<Double, ArrayList<Double>> iradModifiers;
     
-    public SolarPanel(double Vmpp, double Impp, double pmpp, 
-            int XDimensions, int YDimensions,
+    public SolarPanel(double Vmpp, double Impp, double pmpp,
             HashMap<Double, ArrayList<Double>> iradModifiers){
         this.Vmpp = Vmpp;
         this.Impp = Impp;
         this.pmpp = pmpp;
-        this.XDimensions = XDimensions;
-        this.YDimensions = YDimensions;
         this.iradModifiers = iradModifiers;
     }
     

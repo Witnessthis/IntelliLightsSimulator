@@ -44,8 +44,6 @@ public class Environment {
     
     private double sensorModuleEnergyCostMin;
     private double sensorModuleEnergyCostMax;
-    private int ledEnergyCostMin;
-    private int ledEnergyCostMax;
     private int ledPowMin;
     private int ledPowMax;
     private int speedLimitMin;
@@ -62,8 +60,6 @@ public class Environment {
     
     public Environment(SolarPanel solarPanel, double sensorModuleEnergyCostMin,
                                 double sensorModuleEnergyCostMax,
-                                int ledEnergyCostMin,
-                                int ledEnergyCostMax,
                                 int ledPowMin,
                                 int ledPowMax,
                                 int speedLimitMin,
@@ -81,8 +77,6 @@ public class Environment {
         this.solarPanel = solarPanel;
         this.sensorModuleEnergyCostMin = sensorModuleEnergyCostMin;
         this.sensorModuleEnergyCostMax = sensorModuleEnergyCostMax;
-        this.ledEnergyCostMin = ledEnergyCostMin;
-        this.ledEnergyCostMax = ledEnergyCostMax;
         this.ledPowMin = ledPowMin;
         this.ledPowMax = ledPowMax;
         this.speedLimitMin = speedLimitMin;

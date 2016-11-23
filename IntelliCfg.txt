@@ -46,13 +46,11 @@
 #   java -jar path\IntelliLightsSimulator.jar "path\IntelliCfg.txt"
 #
 
-solarPanelDimension         1:2
 Vmpp                        3.0
 Impp                        4.0
 Pmpp						616
 sensorModuleEnergyCost      5.0:6.0
-ledEnergyCost               7:8
-P_led                  		9:10
+ledWatts					9:10
 speedLimit                  15:16
 amountOfCars                17:18
 amountOfPoles               19:20
