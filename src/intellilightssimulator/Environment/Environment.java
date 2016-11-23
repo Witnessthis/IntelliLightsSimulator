@@ -17,12 +17,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Locale;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -58,9 +63,8 @@ public class Environment {
     private int amountOfPolesMax;
     private double longitude;
     private double latitude;
-    private String date;
     private double nightTime;
-    private ArrayList<Double> monthIradVals;
+    private LinkedHashMap<String, Double> monthIradVals;
     
     private String logFileName = null;
     private String filePath = "test/"; //path in windows should be formated as: "C:\\Users\\username\\Desktop\\"
@@ -77,8 +81,7 @@ public class Environment {
                                 int amountOfPolesMax,
                                 double longitude,
                                 double latitude,
-                                String date,
-                                ArrayList<Double> monthIradVals
+                                LinkedHashMap<String, Double> monthIradVals
                                 ){
         
         this.solarPanel = solarPanel;
@@ -94,7 +97,6 @@ public class Environment {
         this.amountOfPolesMax = amountOfPolesMax;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.date = date;
         this.monthIradVals = monthIradVals;
 
         //set lightPoleDistance in roadConfiguration initialization
@@ -103,41 +105,26 @@ public class Environment {
     }
     
     public HashMap<String, Double> runSimulation(){
-        double dayTime = lookUpDaytime(this.latitude, this.longitude, this.date);
         double pmpp = solarPanel.getPmpp();
+        double dayTime = 0.0;
         double pAvail = 0.0;
         double pLedMax = 0.0;
         double pLedMin = 0.0;
-        ArrayList<Double> pmppVector = getPmppVector();
+        
+        for (String month : monthIradVals.keySet()) {
+            double monthIrad = monthIradVals.get(month);
+            
+            if (monthIrad < 1000) {
+              pmpp = calcPmpp(monthIrad);
+            }
+            System.out.println(firstDayOfMonth(month));
+            dayTime = lookUpDaytime(this.latitude, this.longitude, firstDayOfMonth(month));
+        }
         
         this.nightTime = 1440 - dayTime;
         System.out.println("night time: " + this.nightTime);
         
         return null;
-    }
-    private ArrayList<Double> getPmppVector() {
-        ArrayList<Double> pmppVector = new ArrayList<>(12);
-        
-        for (Double monthIrad : monthIradVals) {
-            if (monthIrad < 1000) {
-                pmppVector.add(calcPmpp(monthIrad));
-            } else {
-                pmppVector.add(solarPanel.getPmpp());
-            }
-        }
-        
-        return pmppVector;
-    }
-    
-    /*
-    * Constructs the best and worst case road configurations
-    */
-    private ArrayList<ArrayList<Double>> getRoadConfigMatrix() {
-        ArrayList<ArrayList<Double>> cfgMatrix = null;
-        
-        //worst
-        
-        return cfgMatrix;
     }
     
     private double calcPmpp(double irad) {
@@ -193,6 +180,21 @@ public class Environment {
         return (int)(Math.random()* range) + minSpeed;
     }
     
+    String firstDayOfMonth(String month) {
+        String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
+        String monthNo = "";
+        SimpleDateFormat retForm = new SimpleDateFormat("yyy-MM-dd");
+        Date date = null;
+
+        try {
+            date = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH)
+                    .parse(year + "-" + month + "-01");
+        } catch (java.text.ParseException e) {
+            System.err.println("Unable to parse provided month");
+        }
+        return retForm.format(date);
+    }
+    
     /**
      * 
      * @param latitude
@@ -201,7 +203,6 @@ public class Environment {
      * @return 
      */
     public double lookUpDaytime(double latitude, double longitude, String date) {
-
         URL url;
         try {
             url = new URL("http://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&date=" + date);

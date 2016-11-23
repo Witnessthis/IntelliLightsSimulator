@@ -78,4 +78,3 @@ pmppMod4					100:-8.7:-90.0
 
 longitude                   33.0
 latitude                    34.0
-date                        2016-10-30

@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
 
 /**
@@ -33,7 +34,7 @@ public class IntelliLightsSimulator {
      * @param configPath the path to the configuration file
      */
     private static Environment getEnvFromConfig(String configPath) {
-        String months = "jan feb mar jun jul aug sep oct nov dec";
+        String months = "jan feb mar apr may jun jul aug sep oct nov dec";
         Pattern modPatt = Pattern.compile("pmppMod[0-9]");
 
         double sensorWattsMin = 0;
@@ -51,14 +52,13 @@ public class IntelliLightsSimulator {
         double pmpp = 0.0;
         double longitude = 0.0;
         double latitude = 0.0;
-        String date = "";
-        ArrayList<Double> monthIradVals = new ArrayList<>(12);
+        LinkedHashMap<String, Double> monthIradVals = new LinkedHashMap<>(12);
         HashMap<Double, ArrayList<Double>> iradModifiers = new HashMap<>();
         Environment env = null;
         
         BufferedReader br = null;
         String control;
-        String[] parameters;
+        String[] params;
         String[] vals;
 
         try{
@@ -70,79 +70,75 @@ public class IntelliLightsSimulator {
                     continue;
                 }
                 
-                parameters = sCurrentLine.split("\\s+");
-                control = parameters[0];
+                params = sCurrentLine.split("\\s+");
+                control = params[0];
                 
                 if (control.equals("vmpp")) {
-                    vmpp = Double.parseDouble(parameters[1]);
+                    vmpp = Double.parseDouble(params[1]);
                     System.out.println(control + " : " + vmpp);
                 }
                 else if (control.equals("impp")) {
-                    Impp = Double.parseDouble(parameters[1]);
+                    Impp = Double.parseDouble(params[1]);
                     System.out.println(control + " : " + Impp);
                 }
                 else if (control.equals("pmpp")) {
-                    pmpp = Double.parseDouble(parameters[1]);
+                    pmpp = Double.parseDouble(params[1]);
                     System.out.println(control + " : " + pmpp);
                 }
                 else if (control.equals("sensorModuleWatts")) {
-                    vals = parameters[1].split(":");
+                    vals = params[1].split(":");
                     sensorWattsMin = Double.parseDouble(vals[0]);
                     sensorWattsMax = Double.parseDouble(vals[1]);
                     System.out.println(control + " : " + sensorWattsMin + ":" 
                             + sensorWattsMax);
                 }
                 else if (control.equals("ledWatts")) {
-                    vals = parameters[1].split(":");
+                    vals = params[1].split(":");
                     ledWattsMin = Integer.parseInt(vals[0]);
                     ledWattsMax = Integer.parseInt(vals[1]);
                     System.out.println(control + " : " + ledWattsMin + ":" 
                             + ledWattsMax);
                 }
-                else if (control.equals("date")) {
-                    date = parameters[1];
-                    System.out.println(control + " : " + date);
-                }
                 else if (control.equals("speedLimit")) {
-                    vals = parameters[1].split(":");
+                    vals = params[1].split(":");
                     speedLimitMin = Integer.parseInt(vals[0]);
                     speedLimitMax = Integer.parseInt(vals[1]);
                     System.out.println(control + " : " + speedLimitMin 
                             + ":" + speedLimitMax);
                 }
                 else if (control.equals("amountOfCars")) {
-                    vals = parameters[1].split(":");
+                    vals = params[1].split(":");
                     amountOfCarsMin = Integer.parseInt(vals[0]);
                     amountOfCarsMax = Integer.parseInt(vals[1]);
                     System.out.println(control + " : " + amountOfCarsMin 
                             + ":" + amountOfCarsMax);
                 }
                 else if (control.equals("amountOfPoles")) {
-                    vals = parameters[1].split(":");
+                    vals = params[1].split(":");
                     amountOfPolesMin = Integer.parseInt(vals[0]);
                     amountOfPolesMax = Integer.parseInt(vals[1]);
                     System.out.println(control + " : " + amountOfPolesMin 
                             + ":" + amountOfPolesMax);
                 }
                 else if (control.equals("longitude")) {
-                    longitude = Double.parseDouble(parameters[1]);
+                    longitude = Double.parseDouble(params[1]);
                     System.out.println(control + " : " + longitude);
                 }
                 else if (control.equals("latitude")) {
-                    latitude = Double.parseDouble(parameters[1]);
+                    latitude = Double.parseDouble(params[1]);
                     System.out.println(control + " : " + latitude);
                 }
                 else if (months.contains(control)) {
-                    monthIradVals.add(Double.parseDouble(parameters[1]));
-                    System.out.println(control + " : " + parameters[1]);
+                    monthIradVals.put(control, Double.parseDouble(params[1]));
+                    System.out.println(params[0]);
                 } 
                 else if (modPatt.matcher(control).find()) {
-                    vals = parameters[1].split(":");
+                    vals = params[1].split(":");
                     ArrayList<Double> tmp = new ArrayList<>(2);
                     tmp.add(Double.parseDouble(vals[1]));
                     tmp.add(Double.parseDouble(vals[2]));
                     iradModifiers.put(Double.parseDouble(vals[0]), tmp);
-                    System.out.println(parameters[1]);
+                    System.out.println(params[1]);
                 }
             }
             SolarPanel solarPanel = new SolarPanel(vmpp, Impp, pmpp, iradModifiers);
@@ -150,8 +146,7 @@ public class IntelliLightsSimulator {
             env = new Environment(solarPanel, sensorWattsMin, 
                     sensorWattsMax, ledWattsMin, ledWattsMax, 
                     speedLimitMin, speedLimitMax, amountOfCarsMin, amountOfCarsMax, 
-                    amountOfPolesMin, amountOfPolesMax, longitude, latitude, 
-                    date, monthIradVals);
+                    amountOfPolesMin, amountOfPolesMax, longitude, latitude, monthIradVals);
             
         }catch(IOException e){
             e.printStackTrace();
