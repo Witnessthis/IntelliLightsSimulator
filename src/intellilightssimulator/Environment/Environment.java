@@ -11,10 +11,14 @@ import intellilightssimulator.Hardware.LightPole.LED;
 import intellilightssimulator.Hardware.LightPole.SensorModule;
 import intellilightssimulator.IntelliLightsSimulator;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -57,6 +61,9 @@ public class Environment {
     private String date;
     private double nightTime;
     private ArrayList<Double> monthIradVals;
+    
+    private String logFileName = null;
+    private String filePath = "test/"; //path in windows should be formated as: "C:\\Users\\username\\Desktop\\"
     
     public Environment(SolarPanel solarPanel, double sensorWattsMin,
                                 double sensorWattsMax,
@@ -242,5 +249,44 @@ public class Environment {
             ex.printStackTrace();
         }
         return -1;
+    }
+    
+    /**
+     * For demonstration purposes only
+     */
+    public void printLog() {
+
+        for (int i = 0; i < 11; i++) {
+            appendToLog("Count: " + i + "\r\n", this.filePath);
+        }
+    }
+
+    /**
+     * prints string to a log file.
+     * @param message
+     * @param filePath 
+     */
+    public void appendToLog(String message, String filePath) {
+
+        File file;
+        FileWriter fw;
+
+        if (logFileName == null) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            LocalDateTime now = LocalDateTime.now();
+            this.logFileName = "IntelliLog" + dtf.format(now) + ".txt"; //2016/11/16 12:08:43
+        }
+        try {
+            file = new File(filePath + this.logFileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            fw = new FileWriter(file.getAbsoluteFile(), true);
+            fw.write(message);
+            fw.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
