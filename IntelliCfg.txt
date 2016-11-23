@@ -54,6 +54,7 @@ ledWatts					9:10
 speedLimit                  15:16
 amountOfCars                17:18
 amountOfPoles               19:20
+poleSpacing					303.245
 
 jan                         800.0
 feb                         800.0

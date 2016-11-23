@@ -61,6 +61,7 @@ public class Environment {
     private int amountOfCarsMax;
     private int amountOfPolesMin;
     private int amountOfPolesMax;
+    private double poleSpacing;
     private double longitude;
     private double latitude;
     private double nightTime;
@@ -79,6 +80,7 @@ public class Environment {
                                 int amountOfCarsMax,
                                 int amountOfPolesMin,
                                 int amountOfPolesMax,
+                                double poleSpacing,
                                 double longitude,
                                 double latitude,
                                 LinkedHashMap<String, Double> monthIradVals
@@ -95,6 +97,7 @@ public class Environment {
         this.amountOfCarsMax = amountOfCarsMax;
         this.amountOfPolesMin = amountOfPolesMin;
         this.amountOfPolesMax = amountOfPolesMax;
+        this.poleSpacing = poleSpacing;
         this.latitude = latitude;
         this.longitude = longitude;
         this.monthIradVals = monthIradVals;
@@ -104,12 +107,8 @@ public class Environment {
         System.out.println("Environment Initialized");
     }
     
-    public HashMap<String, Double> runSimulation(){
+    public LinkedHashMap<String, Double> runSimulation(){
         double pmpp = solarPanel.getPmpp();
-        double dayTime = 0.0;
-        double pAvail = 0.0;
-        double pLedMax = 0.0;
-        double pLedMin = 0.0;
         
         for (String month : monthIradVals.keySet()) {
             double monthIrad = monthIradVals.get(month);
@@ -117,14 +116,24 @@ public class Environment {
             if (monthIrad < 1000) {
               pmpp = calcPmpp(monthIrad);
             }
-            System.out.println(firstDayOfMonth(month));
-            dayTime = lookUpDaytime(this.latitude, this.longitude, firstDayOfMonth(month));
+            double dayTime = lookUpDaytime(this.latitude, this.longitude, 
+                    firstDayOfMonth(month));
+            double availWatts = dayTime * pmpp / 60;
+            
+            //calcConsumption(ledPowMax, amountOfPolesMax, SPACING, speedLimitMin, ledPowMax)
         }
         
-        this.nightTime = 1440 - dayTime;
-        System.out.println("night time: " + this.nightTime);
+//        this.nightTime = 1440 - dayTime;
+//        System.out.println("night time: " + this.nightTime);
         
         return null;
+    }
+    
+    private double calcConsumption(double ledWatts, int noOfLeds, double ledSpacing,
+            int carSpeed, int noOfCars) {
+        double onTimePerCar = ledSpacing 
+                / (3 * carSpeed * (noOfLeds - 1) + 2 * carSpeed);
+        return (noOfCars * ledWatts * onTimePerCar);
     }
     
     private double calcPmpp(double irad) {
@@ -180,9 +189,8 @@ public class Environment {
         return (int)(Math.random()* range) + minSpeed;
     }
     
-    String firstDayOfMonth(String month) {
+    private String firstDayOfMonth(String month) {
         String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
-        String monthNo = "";
         SimpleDateFormat retForm = new SimpleDateFormat("yyy-MM-dd");
         Date date = null;
 

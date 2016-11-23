@@ -47,6 +47,7 @@ public class IntelliLightsSimulator {
         int amountOfCarsMax = 0;
         int amountOfPolesMin = 0;
         int amountOfPolesMax = 0;
+        double poleSpacing = 0.0;
         double vmpp = 0.0;
         double Impp = 0.0;
         double pmpp = 0.0;
@@ -120,6 +121,10 @@ public class IntelliLightsSimulator {
                     System.out.println(control + " : " + amountOfPolesMin 
                             + ":" + amountOfPolesMax);
                 }
+                else if (control.equals("poleSpacing")) {
+                    poleSpacing = Double.parseDouble(params[1]);
+                    System.out.println(control + " : " + poleSpacing);
+                }
                 else if (control.equals("longitude")) {
                     longitude = Double.parseDouble(params[1]);
                     System.out.println(control + " : " + longitude);
@@ -146,7 +151,7 @@ public class IntelliLightsSimulator {
             env = new Environment(solarPanel, sensorWattsMin, 
                     sensorWattsMax, ledWattsMin, ledWattsMax, 
                     speedLimitMin, speedLimitMax, amountOfCarsMin, amountOfCarsMax, 
-                    amountOfPolesMin, amountOfPolesMax, longitude, latitude, monthIradVals);
+                    amountOfPolesMin, amountOfPolesMax, poleSpacing, longitude, latitude, monthIradVals);
             
         }catch(IOException e){
             e.printStackTrace();
