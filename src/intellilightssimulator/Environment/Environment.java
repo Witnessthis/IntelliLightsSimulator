@@ -42,8 +42,8 @@ public class Environment {
     private int lightPoleDistance;
     private double speedLimit;
     
-    private double sensorModuleEnergyCostMin;
-    private double sensorModuleEnergyCostMax;
+    private double sensorWattsMin;
+    private double sensorWattsMax;
     private int ledPowMin;
     private int ledPowMax;
     private int speedLimitMin;
@@ -58,8 +58,8 @@ public class Environment {
     private double nightTime;
     private ArrayList<Double> monthIradVals;
     
-    public Environment(SolarPanel solarPanel, double sensorModuleEnergyCostMin,
-                                double sensorModuleEnergyCostMax,
+    public Environment(SolarPanel solarPanel, double sensorWattsMin,
+                                double sensorWattsMax,
                                 int ledPowMin,
                                 int ledPowMax,
                                 int speedLimitMin,
@@ -75,8 +75,8 @@ public class Environment {
                                 ){
         
         this.solarPanel = solarPanel;
-        this.sensorModuleEnergyCostMin = sensorModuleEnergyCostMin;
-        this.sensorModuleEnergyCostMax = sensorModuleEnergyCostMax;
+        this.sensorWattsMin = sensorWattsMin;
+        this.sensorWattsMax = sensorWattsMax;
         this.ledPowMin = ledPowMin;
         this.ledPowMax = ledPowMax;
         this.speedLimitMin = speedLimitMin;

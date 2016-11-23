@@ -46,10 +46,10 @@
 #   java -jar path\IntelliLightsSimulator.jar "path\IntelliCfg.txt"
 #
 
-Vmpp                        3.0
-Impp                        4.0
-Pmpp						616
-sensorModuleEnergyCost      5.0:6.0
+vmpp                        3.0
+impp                        4.0
+pmpp						616
+sensorModuleWatts      		5.0:6.0
 ledWatts					9:10
 speedLimit                  15:16
 amountOfCars                17:18
@@ -68,11 +68,11 @@ oct                         800.0
 nov                         800.0
 dec                         800.0
 
-mod0						800:0.0:-20.0
-mod1						600:-0.9:-40.0
-mod2						400:-2.1:-60.0
-mod3						200:-5.1:-80.0
-mod4						100:-8.7:-90.0
+pmppMod0					800:0.0:-20.0
+pmppMod1					600:-0.9:-40.0
+pmppMod2					400:-2.1:-60.0
+pmppMod3					200:-5.1:-80.0
+pmppMod4					100:-8.7:-90.0
 
 
 
