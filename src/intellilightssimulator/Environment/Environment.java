@@ -105,10 +105,10 @@ public class Environment {
             }
             double dayTime = lookUpDaytime(this.latitude, this.longitude, 
                     getFormattedDate(month, "15"));
-            double nightTime = 1440 - dayTime;
-            
+            double nightTime = 24 - dayTime;
+            double sensorConsumption = nightTime * sensorWatts;
             //corresponds to P_avail in the formula pdf (without battery modifier)
-            double availWatts = (dayTime * pmpp) * battEff;
+            double availWatts = (dayTime * pmpp) * battEff - sensorConsumption;
             //worst case most poles (max led power, most cars, slowest cars)
             double worstCaseMaxPoles = calcConsumption(ledPowMax, amountOfPolesMax, poleSpacing, 
                     speedLimitMin, amountOfCarsMax);
