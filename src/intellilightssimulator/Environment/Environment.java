@@ -178,42 +178,7 @@ public class Environment {
         double pmpp = (solarPanel.getImpp() + imod) * (solarPanel.getVmpp() + vmod); 
         return pmpp;
     }
-    
-    public double calcLedConsumption(){
-        // m/(m/s) = m*(s/m) = ms/m = s    #notetoself
-        /*
-            50 w
-            60 s
-            20 amp-hour
-            48 V
-
-            60s/3600 = 0.016 h
-            50 W * 0.016 h = 0.8 Wh
-            0.8 / 48 V = 0.016 amp-hours
-            20 - 0.016 = 
-
-            ((20amp-hour*48V)Wh) / 0.8 Wh = 1200 h
-            20/0.01666666666666666666 = 1200.00000000000000048 h
-        */
-        
-        int carSpeed = generateCarSpeed();
-        double meterPerSeconds = carSpeed / 3.6;
-        double timeBetweenPoles = this.lightPoleDistance / meterPerSeconds;
-        double pwrConsumption = this.led.getPowerConsumption();
-        double watthours = pwrConsumption * (timeBetweenPoles/3600);
-        double energyConsumed = watthours / this.led.getVoltage();
-        return energyConsumed;
-    }
-    
-    public int generateCarSpeed(){
-        
-        int minSpeed = (int)Math.round(this.speedLimit * 0.9);
-        int maxSpeed = (int)Math.round(this.speedLimit * 1.1);
-        
-        int range = (maxSpeed - minSpeed) + 1;
-        return (int)(Math.random()* range) + minSpeed;
-    }
-    
+   
     private String firstDayOfMonth(String month) {
         String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
         SimpleDateFormat retForm = new SimpleDateFormat("yyyy-MM-dd");
