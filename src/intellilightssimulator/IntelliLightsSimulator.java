@@ -56,7 +56,7 @@ public class IntelliLightsSimulator {
         double latitude = 0.0;
         double battEff = 0.0;
         LinkedHashMap<String, Double> monthIradVals = new LinkedHashMap<>(12);
-        HashMap<Double, ArrayList<Double>> iradModifiers = new HashMap<>();
+        HashMap<Double, ArrayList<Double>> irradModifiers = new HashMap<>();
         Environment env = null;
         
         BufferedReader br = null;
@@ -83,10 +83,6 @@ public class IntelliLightsSimulator {
                 else if (control.equals("impp")) {
                     Impp = Double.parseDouble(params[1]);
                     System.out.println(control + " : " + Impp);
-                }
-                else if (control.equals("pmpp")) {
-                    pmpp = Double.parseDouble(params[1]);
-                    System.out.println(control + " : " + pmpp);
                 }
                 else if (control.equals("sensorModuleWatts")) {
                     vals = params[1].split(":");
@@ -148,11 +144,11 @@ public class IntelliLightsSimulator {
                     ArrayList<Double> tmp = new ArrayList<>(2);
                     tmp.add(Double.parseDouble(vals[1]));
                     tmp.add(Double.parseDouble(vals[2]));
-                    iradModifiers.put(Double.parseDouble(vals[0]), tmp);
+                    irradModifiers.put(Double.parseDouble(vals[0]), tmp);
                     System.out.println(params[1]);
                 }
             }
-            SolarPanel solarPanel = new SolarPanel(vmpp, Impp, pmpp, iradModifiers);
+            SolarPanel solarPanel = new SolarPanel(vmpp, Impp, irradModifiers);
             
             env = new Environment(solarPanel, sensorWattsMin, 
                     sensorWattsMax, ledWattsMin, ledWattsMax, battEff, 

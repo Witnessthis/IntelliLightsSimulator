@@ -292,7 +292,7 @@ public class Environment {
     public void writeLog(LinkedHashMap<String, Double> data) {
 
         data.entrySet().forEach((_item) -> {
-            appendToLog(_item.toString(), this.filePath);
+            appendToLog(_item.toString()+"\r\n", this.filePath);
         });
     }
 

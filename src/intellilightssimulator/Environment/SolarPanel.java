@@ -15,15 +15,14 @@ import java.util.HashMap;
 public class SolarPanel {
     private final double Vmpp;
     private final double Impp;
-    private final double pmpp;
-    private final HashMap<Double, ArrayList<Double>> iradModifiers;
+    private final double pmpp = 0;
+    private final HashMap<Double, ArrayList<Double>> irradModifiers;
     
-    public SolarPanel(double Vmpp, double Impp, double pmpp,
-            HashMap<Double, ArrayList<Double>> iradModifiers){
+    public SolarPanel(double Vmpp, double Impp, 
+            HashMap<Double, ArrayList<Double>> irradModifiers){
         this.Vmpp = Vmpp;
         this.Impp = Impp;
-        this.pmpp = pmpp;
-        this.iradModifiers = iradModifiers;
+        this.irradModifiers = irradModifiers;
     }
     
      /**
@@ -48,10 +47,6 @@ public class SolarPanel {
     }
     
     public HashMap<Double, ArrayList<Double>> getIradModifiers() {
-        return this.iradModifiers;
-    }
-    
-    public double getCharge(int startTime, int endTime) {
-        return 1; //calculation for time-period here.
+        return this.irradModifiers;
     }
 }
