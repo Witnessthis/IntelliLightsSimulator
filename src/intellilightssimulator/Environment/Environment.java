@@ -108,7 +108,7 @@ public class Environment {
             double nightTime = 1440 - dayTime;
             
             //corresponds to P_avail in the formula pdf (without battery modifier)
-            double availWatts = (dayTime * pmpp / 60) * battEff;
+            double availWatts = (dayTime * pmpp) * battEff;
             //worst case most poles (max led power, most cars, slowest cars)
             double worstCaseMaxPoles = calcConsumption(ledPowMax, amountOfPolesMax, poleSpacing, 
                     speedLimitMin, amountOfCarsMax);
@@ -204,7 +204,7 @@ public class Environment {
                             hours  = Integer.parseInt(parts[0]);
                             minutes = Integer.parseInt(parts[1]);
                             seconds = Integer.parseInt(parts[2]);
-                            double totalMin = hours*60 + minutes + seconds/60;
+                            double totalMin = hours + minutes/60 + seconds/60;
                             
                             return totalMin;
                         }else if(content.get("status").equals("INVALID_REQUEST")){
