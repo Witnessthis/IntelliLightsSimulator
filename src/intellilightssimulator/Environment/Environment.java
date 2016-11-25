@@ -55,7 +55,7 @@ public class Environment {
     private final double longitude;
     private final double latitude;
     private double nightTime;
-    private LinkedHashMap<String, Double> monthIradVals;
+    private final LinkedHashMap<String, Double> monthIradVals;
     
     private String logFileName = null;
     private String filePath = "test/"; //path in windows should be formated as: "C:\\Users\\username\\Desktop\\"
