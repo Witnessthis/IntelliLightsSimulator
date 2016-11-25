@@ -285,7 +285,7 @@ public class Environment {
     public void writeLog(LinkedHashMap<String, Double> data) {
 
         data.entrySet().forEach((_item) -> {
-            appendToLog(_item.toString()+"\r\n", this.filePath);
+            appendToLog(_item.toString(), this.filePath);
         });
     }
 
@@ -311,7 +311,7 @@ public class Environment {
             }
             fw = new FileWriter(file.getAbsoluteFile(), true);
             fw.write(message);
-            fw.write("\n");
+            fw.write("\r\n");
             fw.close();
         } catch (IOException ex) {
             ex.printStackTrace();
