@@ -8,21 +8,16 @@ package intellilightssimulator.Environment;
 import intellilightssimulator.Hardware.LightPole.LED;
 import intellilightssimulator.Hardware.LightPole.SensorModule;
 import intellilightssimulator.IntelliLightsSimulator;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import java.text.SimpleDateFormat;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -30,7 +25,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.LinkedHashMap;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -106,7 +100,6 @@ public class Environment {
         this.longitude = longitude;
         this.monthIradVals = monthIradVals;
         this.battEff = battEff;
-        //set lightPoleDistance in roadConfiguration initialization
         
         System.out.println("Environment Initialized");
     }
