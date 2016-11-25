@@ -4,25 +4,17 @@
  * and open the template in the editor.
  */
 package intellilightssimulator.Environment;
-
-import intellilightssimulator.Hardware.LightPole.LED;
-import intellilightssimulator.Hardware.LightPole.SensorModule;
 import intellilightssimulator.IntelliLightsSimulator;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import java.text.SimpleDateFormat;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -30,7 +22,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.LinkedHashMap;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -46,14 +37,10 @@ public class Environment {
 //    public int trafficRate;
 //    public int trafficSpeed;
 //    public int roadConfiguration;
+
     private final SolarPanel solarPanel;
-    private final SensorModule sensorModule;
-    private final LED led;
 
-    private final int lightPoleDistance;
-    private final double speedLimit;
-
-    private final final double sensorWattsMin;
+    private final double sensorWattsMin;
     private final double sensorWattsMax;
     private final int ledPowMin;
     private final int ledPowMax;
@@ -67,7 +54,7 @@ public class Environment {
     private final double poleSpacing;
     private final double longitude;
     private final double latitude;
-    private final double nightTime;
+    private double nightTime;
     private LinkedHashMap<String, Double> monthIradVals;
     
     private String logFileName = null;
@@ -106,7 +93,6 @@ public class Environment {
         this.longitude = longitude;
         this.monthIradVals = monthIradVals;
         this.battEff = battEff;
-        //set lightPoleDistance in roadConfiguration initialization
         
         System.out.println("Environment Initialized");
     }
@@ -178,7 +164,7 @@ public class Environment {
         double pmpp = (solarPanel.getImpp() + imod) * (solarPanel.getVmpp() + vmod); 
         return pmpp;
     }
-   
+  
     private String getFormattedDate(String month, String day) {
         String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
         SimpleDateFormat retForm = new SimpleDateFormat("yyyy-MM-dd");
@@ -257,7 +243,7 @@ public class Environment {
     public void writeLog(LinkedHashMap<String, Double> data) {
 
         data.entrySet().forEach((_item) -> {
-            appendToLog(_item.toString()+"\r\n", this.filePath);
+            appendToLog(_item.toString(), this.filePath);
         });
     }
 
@@ -283,7 +269,7 @@ public class Environment {
             }
             fw = new FileWriter(file.getAbsoluteFile(), true);
             fw.write(message);
-            fw.write("\n");
+            fw.write("\r\n");
             fw.close();
         } catch (IOException ex) {
             ex.printStackTrace();
