@@ -46,28 +46,28 @@ public class Environment {
 //    public int trafficRate;
 //    public int trafficSpeed;
 //    public int roadConfiguration;
-    private SolarPanel solarPanel;
-    private SensorModule sensorModule;
-    private LED led;
+    private final SolarPanel solarPanel;
+    private final SensorModule sensorModule;
+    private final LED led;
 
-    private int lightPoleDistance;
-    private double speedLimit;
-    
-    private double sensorWattsMin;
-    private double sensorWattsMax;
-    private int ledPowMin;
-    private int ledPowMax;
-    private double battEff;
-    private int speedLimitMin;
-    private int speedLimitMax;
-    private int amountOfCarsMin;
-    private int amountOfCarsMax;
-    private int amountOfPolesMin;
-    private int amountOfPolesMax;
-    private double poleSpacing;
-    private double longitude;
-    private double latitude;
-    private double nightTime;
+    private final int lightPoleDistance;
+    private final double speedLimit;
+
+    private final final double sensorWattsMin;
+    private final double sensorWattsMax;
+    private final int ledPowMin;
+    private final int ledPowMax;
+    private final double battEff;
+    private final int speedLimitMin;
+    private final int speedLimitMax;
+    private final int amountOfCarsMin;
+    private final int amountOfCarsMax;
+    private final int amountOfPolesMin;
+    private final int amountOfPolesMax;
+    private final double poleSpacing;
+    private final double longitude;
+    private final double latitude;
+    private final double nightTime;
     private LinkedHashMap<String, Double> monthIradVals;
     
     private String logFileName = null;
