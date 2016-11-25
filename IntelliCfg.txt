@@ -2,44 +2,69 @@
 #                           #
 #   IntelliLights Config    #
 #                           #
+#   Authors:                #
+#                           #
+#   Emil Granberg           #
+#   Roman Birca             #
+#   Nanna Dohn              #
+#                           #
 #############################
+
+#
+#   Dictionary
+#
+#   Irrad   =   Irradiation
+#   Mod     =   Modifier
+#   Cfg     =   Config
+#   Val     =   Value
+#   Bat     =   Battery
+#   Eff     =   Efficiency
+#   Pmpp    =   Maximum output
+#   Vmpp    =   Maximum Voltage at Pmpp
+#   Impp    =   Maximum Current at Pmpp
+#
 
 #   Parameters:
 #
-#   solarPanelDimension     x:y                         (int)
-#   Vmpp                    val                         (double)
-#   Impp                    val                         (double)
-#   sensorModuleEnergyCost  min:max                     (double)
-#   ledEnergyCost           min:max                     (int)
-#   LEDVoltage              min:max                     (int)
-#   speedLimit              min:max                     (int)
-#   amountOfCars            min:max                     (int)
-#   amountOfPoles           min:max                     (int)
+#   Name                    Format                      Type                            Unit
+#   ================================================================================================================
+#
+#   Vmpp                    val                         (double)                        [V]
+#   Impp                    val                         (double)                        [A]
+#   pmppMod[0-9]            Irrad:VmppMod:ImppMod       (int:double:double)             [W/m^2:V:A]
+#   sensorModuleWatts       min:max                     (double:double)                 [W]
+#   ledWatts                min:max                     (int:int)                       [W]
+#   battEff                 val                         (double)                        [%]
+#
+#   speedLimit              min:max                     (int:int)                       [km/h]
+#   amountOfCars            min:max                     (int:int)                       [-]
+#   amountOfPoles           min:max                     (int:int)                       [-]
+#   poleSpacing             val                         (double)                        [km]
 #   
 #   #Average irradiation for each month based on CM SAF database (http://re.jrc.ec.europa.eu/pvgis/apps4/pvest.php#)
 #
-#   jan                     val                         (double)
-#   feb                     val                         (double)
-#   mar                     val                         (double)
-#   apr                     val                         (double)
-#   may                     val                         (double)
-#   jun                     val                         (double)
-#   jul                     val                         (double)
-#   aug                     val                         (double)
-#   sep                     val                         (double)
-#   oct                     val                         (double)
-#   nov                     val                         (double)
-#   dec                     val                         (double)
+#   jan                     val                         (double)                        [W/m^2]
+#   feb                     val                         (double)                        [W/m^2]
+#   mar                     val                         (double)                        [W/m^2]
+#   apr                     val                         (double)                        [W/m^2]
+#   may                     val                         (double)                        [W/m^2]
+#   jun                     val                         (double)                        [W/m^2]
+#   jul                     val                         (double)                        [W/m^2]
+#   aug                     val                         (double)                        [W/m^2]
+#   sep                     val                         (double)                        [W/m^2]
+#   oct                     val                         (double)                        [W/m^2]
+#   nov                     val                         (double)                        [W/m^2]
+#   dec                     val                         (double)                        [W/m^2]
 #
-#   longitude               val                         (double)
-#   latitude                val                         (double)
-#   date                    YYYY-MM-DD                  (String)
+#   longitude               val                         (double)                        [-]
+#   latitude                val                         (double)                        [-]
 
 
-#   Format:
+#   General format:
 #
-#   Parameter Value
-#
+#   Parameter       Value
+#   Example:
+#   speedLimit      60:100
 #
 #   Command Line Arguments:
 #
@@ -48,15 +73,19 @@
 
 vmpp                        24.40
 impp                        8.10
-pmpp						200.
-sensorModuleWatts      		0.0:0.0
-ledWatts					50:60
-battEff						0.9
+pmppMod0                    800:0.0:-20.0
+pmppMod1                    600:-0.9:-40.0
+pmppMod2                    400:-2.1:-60.0
+pmppMod3                    200:-5.1:-80.0
+pmppMod4                    100:-8.7:-90.0
+sensorModuleWatts           0.00036:0.00036
+ledWatts                    50:60
+battEff                     0.9
 
 speedLimit                  50:60
 amountOfCars                200:300
 amountOfPoles               20:30
-poleSpacing					0.01
+poleSpacing                 0.01
 
 jan                         1060.0
 feb                         1720.0
@@ -70,14 +99,6 @@ sep                         4220.0
 oct                         2600.0
 nov                         1120.0
 dec                         750.0
-
-pmppMod0					800:0.0:-20.0
-pmppMod1					600:-0.9:-40.0
-pmppMod2					400:-2.1:-60.0
-pmppMod3					200:-5.1:-80.0
-pmppMod4					100:-8.7:-90.0
-
-
 
 longitude                   12.3117
 latitude                    55.475
