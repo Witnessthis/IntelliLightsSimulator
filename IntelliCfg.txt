@@ -51,6 +51,8 @@ impp                        8.10
 pmpp						200.
 sensorModuleWatts      		0.0:0.0
 ledWatts					50:60
+battEff						0.9
+
 speedLimit                  50:60
 amountOfCars                200:300
 amountOfPoles               20:30

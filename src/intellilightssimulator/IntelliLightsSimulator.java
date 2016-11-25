@@ -6,7 +6,7 @@
 package intellilightssimulator;
 
 import intellilightssimulator.Environment.Environment;
-import intellilightssimulator.Hardware.EnergyPackage.SolarPanel;
+import intellilightssimulator.Environment.SolarPanel;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -54,6 +54,7 @@ public class IntelliLightsSimulator {
         double pmpp = 0.0;
         double longitude = 0.0;
         double latitude = 0.0;
+        double battEff = 0.0;
         LinkedHashMap<String, Double> monthIradVals = new LinkedHashMap<>(12);
         HashMap<Double, ArrayList<Double>> iradModifiers = new HashMap<>();
         Environment env = null;
@@ -100,6 +101,10 @@ public class IntelliLightsSimulator {
                     ledWattsMax = Integer.parseInt(vals[1]);
                     System.out.println(control + " : " + ledWattsMin + ":" 
                             + ledWattsMax);
+                }
+                else if(control.equals("battEff")) {
+                    battEff = Double.parseDouble(params[1]);
+                    System.out.println(control + " : " + battEff);
                 }
                 else if (control.equals("speedLimit")) {
                     vals = params[1].split(":");
@@ -150,7 +155,7 @@ public class IntelliLightsSimulator {
             SolarPanel solarPanel = new SolarPanel(vmpp, Impp, pmpp, iradModifiers);
             
             env = new Environment(solarPanel, sensorWattsMin, 
-                    sensorWattsMax, ledWattsMin, ledWattsMax, 
+                    sensorWattsMax, ledWattsMin, ledWattsMax, battEff, 
                     speedLimitMin, speedLimitMax, amountOfCarsMin, amountOfCarsMax, 
                     amountOfPolesMin, amountOfPolesMax, poleSpacing, longitude, latitude, monthIradVals);
             

@@ -5,8 +5,6 @@
  */
 package intellilightssimulator.Environment;
 
-import intellilightssimulator.Hardware.EnergyPackage.Battery;
-import intellilightssimulator.Hardware.EnergyPackage.SolarPanel;
 import intellilightssimulator.Hardware.LightPole.LED;
 import intellilightssimulator.Hardware.LightPole.SensorModule;
 import intellilightssimulator.IntelliLightsSimulator;
@@ -32,7 +30,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.LinkedHashMap;
-import java.util.Map.Entry;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -49,7 +46,6 @@ public class Environment {
 //    public int trafficRate;
 //    public int trafficSpeed;
 //    public int roadConfiguration;
-    private Battery battery;
     private SolarPanel solarPanel;
     private SensorModule sensorModule;
     private LED led;
@@ -61,6 +57,7 @@ public class Environment {
     private double sensorWattsMax;
     private int ledPowMin;
     private int ledPowMax;
+    private double battEff;
     private int speedLimitMin;
     private int speedLimitMax;
     private int amountOfCarsMin;
@@ -80,6 +77,7 @@ public class Environment {
                                 double sensorWattsMax,
                                 int ledPowMin,
                                 int ledPowMax,
+                                double battEff,
                                 int speedLimitMin,
                                 int speedLimitMax,
                                 int amountOfCarsMin,
@@ -107,7 +105,7 @@ public class Environment {
         this.latitude = latitude;
         this.longitude = longitude;
         this.monthIradVals = monthIradVals;
-
+        this.battEff = battEff;
         //set lightPoleDistance in roadConfiguration initialization
         
         System.out.println("Environment Initialized");
@@ -125,9 +123,9 @@ public class Environment {
             }
             double dayTime = lookUpDaytime(this.latitude, this.longitude, 
                     firstDayOfMonth(month));
-            //corresponds to P_avail in the formula pdf (without battery modifier)
-            double availWatts = dayTime * pmpp / 60;
             
+            //corresponds to P_avail in the formula pdf (without battery modifier)
+            double availWatts = (dayTime * pmpp / 60) * battEff;
             //worst case most poles (max led power, most cars, slowest cars)
             double worstCaseMaxPoles = calcConsumption(ledPowMax, amountOfPolesMax, poleSpacing, 
                     speedLimitMin, amountOfCarsMax);
@@ -218,7 +216,7 @@ public class Environment {
     
     private String firstDayOfMonth(String month) {
         String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
-        SimpleDateFormat retForm = new SimpleDateFormat("yyy-MM-dd");
+        SimpleDateFormat retForm = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
 
         try {
