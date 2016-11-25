@@ -78,7 +78,7 @@ pmppMod1                    600:-0.9:-40.0
 pmppMod2                    400:-2.1:-60.0
 pmppMod3                    200:-5.1:-80.0
 pmppMod4                    100:-8.7:-90.0
-sensorModuleWatts           0.00036:0.00036
+sensorModuleWatts           0.00036
 ledWatts                    50:60
 battEff                     0.9
 

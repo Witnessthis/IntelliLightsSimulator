@@ -40,8 +40,7 @@ public class Environment {
 
     private final SolarPanel solarPanel;
 
-    private final double sensorWattsMin;
-    private final double sensorWattsMax;
+    private final double sensorWatts;
     private final int ledPowMin;
     private final int ledPowMax;
     private final double battEff;
@@ -54,14 +53,12 @@ public class Environment {
     private final double poleSpacing;
     private final double longitude;
     private final double latitude;
-    private double nightTime;
     private final LinkedHashMap<String, Double> monthIradVals;
     
     private String logFileName = null;
     private String filePath = "test/"; //path in windows should be formated as: "C:\\Users\\username\\Desktop\\"
     
-    public Environment(SolarPanel solarPanel, double sensorWattsMin,
-                                double sensorWattsMax,
+    public Environment(SolarPanel solarPanel, double sensorWatts,
                                 int ledPowMin,
                                 int ledPowMax,
                                 double battEff,
@@ -78,8 +75,7 @@ public class Environment {
                                 ){
         
         this.solarPanel = solarPanel;
-        this.sensorWattsMin = sensorWattsMin;
-        this.sensorWattsMax = sensorWattsMax;
+        this.sensorWatts = sensorWatts;
         this.ledPowMin = ledPowMin;
         this.ledPowMax = ledPowMax;
         this.speedLimitMin = speedLimitMin;
@@ -109,6 +105,7 @@ public class Environment {
             }
             double dayTime = lookUpDaytime(this.latitude, this.longitude, 
                     getFormattedDate(month, "15"));
+            double nightTime = 1440 - dayTime;
             
             //corresponds to P_avail in the formula pdf (without battery modifier)
             double availWatts = (dayTime * pmpp / 60) * battEff;
@@ -131,8 +128,6 @@ public class Environment {
             results.put(month + " bestCaseMinPoles ", availWatts - bestCaseMinPoles);
         }
         
-//        this.nightTime = 1440 - dayTime;
-//        System.out.println("night time: " + this.nightTime);
         
         return results;
     }

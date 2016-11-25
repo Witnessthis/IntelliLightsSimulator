@@ -38,8 +38,7 @@ public class IntelliLightsSimulator {
         String months = "jan feb mar apr may jun jul aug sep oct nov dec";
         Pattern modPatt = Pattern.compile("pmppMod[0-9]");
 
-        double sensorWattsMin = 0;
-        double sensorWattsMax = 0;
+        double sensorWatts = 0.0;
         int ledWattsMin = 0;
         int ledWattsMax = 0;
         int speedLimitMin = 0;
@@ -85,11 +84,8 @@ public class IntelliLightsSimulator {
                     System.out.println(control + " : " + Impp);
                 }
                 else if (control.equals("sensorModuleWatts")) {
-                    vals = params[1].split(":");
-                    sensorWattsMin = Double.parseDouble(vals[0]);
-                    sensorWattsMax = Double.parseDouble(vals[1]);
-                    System.out.println(control + " : " + sensorWattsMin + ":" 
-                            + sensorWattsMax);
+                    sensorWatts = Double.parseDouble(params[1]);
+                    System.out.println(control + " : " + sensorWatts);
                 }
                 else if (control.equals("ledWatts")) {
                     vals = params[1].split(":");
@@ -150,8 +146,7 @@ public class IntelliLightsSimulator {
             }
             SolarPanel solarPanel = new SolarPanel(vmpp, Impp, irradModifiers);
             
-            env = new Environment(solarPanel, sensorWattsMin, 
-                    sensorWattsMax, ledWattsMin, ledWattsMax, battEff, 
+            env = new Environment(solarPanel, sensorWatts, ledWattsMin, ledWattsMax, battEff, 
                     speedLimitMin, speedLimitMax, amountOfCarsMin, amountOfCarsMax, 
                     amountOfPolesMin, amountOfPolesMax, poleSpacing, longitude, latitude, monthIradVals);
             
