@@ -122,7 +122,7 @@ public class Environment {
               pmpp = calcPmpp(monthIrad);
             }
             double dayTime = lookUpDaytime(this.latitude, this.longitude, 
-                    firstDayOfMonth(month));
+                    getFormattedDate(month, "15"));
             
             //corresponds to P_avail in the formula pdf (without battery modifier)
             double availWatts = (dayTime * pmpp / 60) * battEff;
@@ -179,14 +179,14 @@ public class Environment {
         return pmpp;
     }
    
-    private String firstDayOfMonth(String month) {
+    private String getFormattedDate(String month, String day) {
         String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
         SimpleDateFormat retForm = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
 
         try {
             date = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH)
-                    .parse(year + "-" + month + "-01");
+                    .parse(year + "-" + month + "-" + day);
         } catch (java.text.ParseException e) {
             System.err.println("Unable to parse provided month");
         }
