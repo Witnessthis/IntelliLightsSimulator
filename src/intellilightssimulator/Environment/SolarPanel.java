@@ -13,34 +13,35 @@ import java.util.HashMap;
  * @author emilj
  */
 public class SolarPanel {
-    private final double Vmpp;
-    private final double Impp;
-    private final double pmpp = 0;
+    private final double vmpp;
+    private final double impp;
+    private final double pmpp;
     private final HashMap<Double, ArrayList<Double>> irradModifiers;
     
-    public SolarPanel(double Vmpp, double Impp, 
+    public SolarPanel(double vmpp, double impp, 
             HashMap<Double, ArrayList<Double>> irradModifiers){
-        this.Vmpp = Vmpp;
-        this.Impp = Impp;
+        this.vmpp = vmpp;
+        this.impp = impp;
+        this.pmpp = vmpp * impp;
         this.irradModifiers = irradModifiers;
     }
     
      /**
-     * @return the Vmpp
+     * @return the vmpp
      */
     public double getVmpp() {
-        return Vmpp;
+        return vmpp;
     }
 
     /**
-     * @return the Impp
+     * @return the impp
      */
     public double getImpp() {
-        return Impp;
+        return impp;
     }
 
      /**
-     * @return the Vmpp
+     * @return the pmpp
      */
     public double getPmpp() {
         return pmpp;
