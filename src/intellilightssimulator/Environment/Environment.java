@@ -204,9 +204,9 @@ public class Environment {
                             hours  = Integer.parseInt(parts[0]);
                             minutes = Integer.parseInt(parts[1]);
                             seconds = Integer.parseInt(parts[2]);
-                            double totalMin = hours + minutes/60 + seconds/60;
+                            double totalHours = hours + minutes/60 + seconds/(60*60);
                             
-                            return totalMin;
+                            return totalHours;
                         }else if(content.get("status").equals("INVALID_REQUEST")){
                             System.err.println("Error: INVALID_REQUEST");
                             return -1;
