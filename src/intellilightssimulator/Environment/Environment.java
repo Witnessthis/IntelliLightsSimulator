@@ -142,8 +142,7 @@ public class Environment {
     */
     private double calcConsumption(double ledWatts, int noOfLeds, double ledSpacing,
             int carSpeed, int noOfCars) {
-        double onTimePerCar = ledSpacing 
-                / (3 * carSpeed * (noOfLeds - 1) + 2 * carSpeed);
+        double onTimePerCar = ledSpacing * (noOfLeds - 1) / carSpeed;
         return (noOfCars * ledWatts * onTimePerCar);
     }
     
