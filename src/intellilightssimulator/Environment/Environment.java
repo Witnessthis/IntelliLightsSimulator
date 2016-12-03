@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package intellilightssimulator.Environment;
+
 import intellilightssimulator.IntelliLightsSimulator;
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,8 +21,10 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -37,7 +40,6 @@ public class Environment {
 //    public int trafficRate;
 //    public int trafficSpeed;
 //    public int roadConfiguration;
-
     private final SolarPanel solarPanel;
 
     private final double sensorWatts;
@@ -54,26 +56,26 @@ public class Environment {
     private final double longitude;
     private final double latitude;
     private final LinkedHashMap<String, Double> monthIradVals;
-    
+
     private String logFileName = null;
     private String filePath = "test/"; //path in windows should be formated as: "C:\\Users\\username\\Desktop\\"
-    
+
     public Environment(SolarPanel solarPanel, double sensorWatts,
-                                int ledPowMin,
-                                int ledPowMax,
-                                double battEff,
-                                int speedLimitMin,
-                                int speedLimitMax,
-                                int amountOfCarsMin,
-                                int amountOfCarsMax,
-                                int amountOfPolesMin,
-                                int amountOfPolesMax,
-                                double poleSpacing,
-                                double longitude,
-                                double latitude,
-                                LinkedHashMap<String, Double> monthIradVals
-                                ){
-        
+            int ledPowMin,
+            int ledPowMax,
+            double battEff,
+            int speedLimitMin,
+            int speedLimitMax,
+            int amountOfCarsMin,
+            int amountOfCarsMax,
+            int amountOfPolesMin,
+            int amountOfPolesMax,
+            double poleSpacing,
+            double longitude,
+            double latitude,
+            LinkedHashMap<String, Double> monthIradVals
+    ) {
+
         this.solarPanel = solarPanel;
         this.sensorWatts = sensorWatts;
         this.ledPowMin = ledPowMin;
@@ -89,21 +91,21 @@ public class Environment {
         this.longitude = longitude;
         this.monthIradVals = monthIradVals;
         this.battEff = battEff;
-        
+
         System.out.println("Environment Initialized");
     }
-    
-    public LinkedHashMap<String, Double> runSimulation(){
+
+    public LinkedHashMap<String, Double> runSimulation() {
         double pmpp = solarPanel.getPmpp();
         LinkedHashMap<String, Double> results = new LinkedHashMap<>();
-        
+
         for (String month : monthIradVals.keySet()) {
             double monthIrad = monthIradVals.get(month);
-            
+
             if (monthIrad < 1000) {
-              pmpp = calcPmpp(monthIrad);
+                pmpp = calcPmpp(monthIrad);
             }
-            double dayTime = lookUpDaytime(this.latitude, this.longitude, 
+            double dayTime = lookUpDaytime(this.latitude, this.longitude,
                     getFormattedDate(month, "15"));
             double nightTime = 24 - dayTime;
             double sensorConsumpitonMax = amountOfPolesMax * nightTime * sensorWatts;
@@ -112,41 +114,40 @@ public class Environment {
             double availWattsMaxPoles = (dayTime * pmpp) * battEff - sensorConsumpitonMax;
             double availWattsMinPoles = (dayTime * pmpp) * battEff - sensorConsumpitonMin;
             //worst case most poles (max led power, most cars, slowest cars)
-            double worstCaseMaxPoles = calcConsumption(ledPowMax, amountOfPolesMax, poleSpacing, 
+            double worstCaseMaxPoles = calcConsumption(ledPowMax, amountOfPolesMax, poleSpacing,
                     speedLimitMin, amountOfCarsMax);
             //worst case most poles (max led power, most cars, slowest cars)
-            double bestCaseMaxPoles = calcConsumption(ledPowMin, amountOfPolesMax, poleSpacing, 
+            double bestCaseMaxPoles = calcConsumption(ledPowMin, amountOfPolesMax, poleSpacing,
                     speedLimitMax, amountOfCarsMin);
             //worst case most poles (max led power, most cars, slowest cars)
-            double worstCaseMinPoles = calcConsumption(ledPowMax, amountOfPolesMin, poleSpacing, 
+            double worstCaseMinPoles = calcConsumption(ledPowMax, amountOfPolesMin, poleSpacing,
                     speedLimitMin, amountOfCarsMax);
             //worst case most poles (max led power, most cars, slowest cars)
-            double bestCaseMinPoles = calcConsumption(ledPowMin, amountOfPolesMin, poleSpacing, 
+            double bestCaseMinPoles = calcConsumption(ledPowMin, amountOfPolesMin, poleSpacing,
                     speedLimitMax, amountOfCarsMin);
-            
-            results.put(month + " worstCaseMaxPoles ", availWattsMaxPoles - worstCaseMaxPoles);
-            results.put(month + " bestCaseMaxPoles ", availWattsMaxPoles - bestCaseMaxPoles);
+
             results.put(month + " worstCaseMinPoles ", availWattsMinPoles - worstCaseMinPoles);
             results.put(month + " bestCaseMinPoles ", availWattsMinPoles - bestCaseMinPoles);
+            results.put(month + " worstCaseMaxPoles ", availWattsMaxPoles - worstCaseMaxPoles);
+            results.put(month + " bestCaseMaxPoles ", availWattsMaxPoles - bestCaseMaxPoles);
         }
-        
-        
+
         return results;
     }
-    
+
     /*
     * corresponds to P_led(max/min) in the formula pdf
-    */
+     */
     private double calcConsumption(double ledWatts, int noOfLeds, double ledSpacing,
             int carSpeed, int noOfCars) {
         double onTimePerCar = ledSpacing * (noOfLeds - 1) / carSpeed;
         return (noOfCars * ledWatts * onTimePerCar);
     }
-    
+
     private double calcPmpp(double irad) {
         double closestIrad = 0.0;
         double prevIradDiff = Double.MAX_VALUE;
-        
+
         for (Double k : solarPanel.getIradModifiers().keySet()) {
             double iradDiff = Math.abs(k - irad);
             if (prevIradDiff > iradDiff) {
@@ -157,10 +158,10 @@ public class Environment {
         ArrayList<Double> pmppModifs = solarPanel.getIradModifiers().get(closestIrad);
         double vmod = solarPanel.getVmpp() * pmppModifs.get(0) / 100;
         double imod = solarPanel.getImpp() * pmppModifs.get(1) / 100;
-        double pmpp = (solarPanel.getImpp() + imod) * (solarPanel.getVmpp() + vmod); 
+        double pmpp = (solarPanel.getImpp() + imod) * (solarPanel.getVmpp() + vmod);
         return pmpp;
     }
-  
+
     private String getFormattedDate(String month, String day) {
         String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
         SimpleDateFormat retForm = new SimpleDateFormat("yyyy-MM-dd");
@@ -174,13 +175,13 @@ public class Environment {
         }
         return retForm.format(date);
     }
-    
+
     /**
-     * 
+     *
      * @param latitude
      * @param longitude
      * @param date
-     * @return 
+     * @return
      */
     public double lookUpDaytime(double latitude, double longitude, String date) {
         URL url;
@@ -193,29 +194,29 @@ public class Environment {
             double seconds;
             JSONParser parser = new JSONParser();
             JSONObject content;
-                    
+
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
                 for (String line; (line = reader.readLine()) != null;) {
                     try {
-                        content = (JSONObject)parser.parse(line);
-                        if(content.get("status").equals("OK")){
-                            JSONObject results = (JSONObject)content.get("results");
+                        content = (JSONObject) parser.parse(line);
+                        if (content.get("status").equals("OK")) {
+                            JSONObject results = (JSONObject) content.get("results");
                             dayTime = results.get("day_length").toString();
                             parts = dayTime.split(":");
-                            
-                            hours  = Integer.parseInt(parts[0]);
+
+                            hours = Integer.parseInt(parts[0]);
                             minutes = Integer.parseInt(parts[1]);
                             seconds = Integer.parseInt(parts[2]);
-                            double totalHours = hours + minutes/60 + seconds/(60*60);
-                            
+                            double totalHours = hours + minutes / 60 + seconds / (60 * 60);
+
                             return totalHours;
-                        }else if(content.get("status").equals("INVALID_REQUEST")){
+                        } else if (content.get("status").equals("INVALID_REQUEST")) {
                             System.err.println("Error: INVALID_REQUEST");
                             return -1;
-                        }else if(content.get("status").equals("INVALID_DATE")){
+                        } else if (content.get("status").equals("INVALID_DATE")) {
                             System.err.println("Error: INVALID_DATE");
                             return -1;
-                        }else{
+                        } else {
                             System.err.println("Error: UNKNOWN_ERROR");
                             return -1;
                         }
@@ -231,22 +232,55 @@ public class Environment {
         }
         return -1;
     }
-    
+
     /**
      * For demonstration purposes only
+     *
      * @param data
      */
     public void writeLog(LinkedHashMap<String, Double> data) {
 
+        Map<String, Boolean> written = new HashMap<>();
+        written.put("jan", false);
+        written.put("feb", false);
+        written.put("mar", false);
+        written.put("apr", false);
+        written.put("may", false);
+        written.put("jun", false);
+        written.put("jul", false);
+        written.put("aug", false);
+        written.put("sep", false);
+        written.put("oct", false);
+        written.put("nov", false);
+        written.put("dec", false);
+
+        
         data.entrySet().forEach((_item) -> {
-            appendToLog(_item.toString(), this.filePath);
+
+            String[] s = _item.getKey().split("\\s+");
+
+            if (written.get(s[0]).equals(false)) {
+                appendToLog("\r\n"+s[0]+":\r\n", this.filePath);
+                appendToLog("Minimum poles      worst case      best case\r\n", this.filePath);
+                written.put(s[0], true);
+            }
+            if(written.get(s[0]).equals(true) && s[1].equals("worstCaseMinPoles")){
+                appendToLog("                   " + _item.getValue().toString(), this.filePath);
+            }
+            else if(written.get(s[0]).equals(true) && s[1].equals("bestCaseMinPoles")){
+                appendToLog("         " + _item.getValue().toString()+"\r\n", this.filePath);
+                appendToLog("Maximum poles      worst case      best case\r\n", this.filePath);
+            }
+
+            appendToLog(_item.getValue().toString(), this.filePath);
         });
     }
 
     /**
      * prints string to a log file.
+     *
      * @param message
-     * @param filePath 
+     * @param filePath
      */
     public void appendToLog(String message, String filePath) {
 
@@ -265,7 +299,7 @@ public class Environment {
             }
             fw = new FileWriter(file.getAbsoluteFile(), true);
             fw.write(message);
-            fw.write("\r\n");
+            //fw.write("\r\n");
             fw.close();
         } catch (IOException ex) {
             ex.printStackTrace();
