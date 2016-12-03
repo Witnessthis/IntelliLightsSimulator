@@ -127,11 +127,13 @@ public class Environment {
             //worst case most poles (max led power, most cars, slowest cars)
             double bestCaseMinPoles = calcConsumption(ledPowMin, amountOfPolesMin, poleSpacing,
                     speedLimitMax, amountOfCarsMin);
-
+            
             results.put(month + " worstCaseMinPoles ", availWattsMinPoles - worstCaseMinPoles);
             results.put(month + " bestCaseMinPoles ", availWattsMinPoles - bestCaseMinPoles);
+            results.put(month + " availWattsMinPoles ", availWattsMinPoles);
             results.put(month + " worstCaseMaxPoles ", availWattsMaxPoles - worstCaseMaxPoles);
             results.put(month + " bestCaseMaxPoles ", availWattsMaxPoles - bestCaseMaxPoles);
+            results.put(month + " availWattsMaxPoles ", availWattsMaxPoles);
         }
 
         return results;
@@ -241,7 +243,7 @@ public class Environment {
      * @param data
      */
     public void writeLog(LinkedHashMap<String, Double> data) {
-
+        
         Map<String, Boolean> written = new HashMap<>();
         written.put("jan", false);
         written.put("feb", false);
@@ -257,7 +259,7 @@ public class Environment {
         written.put("dec", false);
 
         
-        data.entrySet().forEach((_item) -> {
+        data.entrySet().forEach((_item) -> { 
 
             String[] s = _item.getKey().split("\\s+");
             DecimalFormat df = new DecimalFormat("#.#");
@@ -265,23 +267,28 @@ public class Environment {
             
             
             if (written.get(s[0]).equals(false)) {
-                appendToLog(s[0]+":\t\t\tworst case\tbest case\r\n", this.filePath);
+                appendToLog(s[0]+":\t\t\tworst case\tbest case\tavailable\r\n", this.filePath);
                 written.put(s[0], true);
             }
             if(written.get(s[0]).equals(true) && s[1].equals("worstCaseMinPoles")){
-                appendToLog("Minimum poles\t\t" + df.format(_item.getValue())+"[W]", this.filePath);
+                appendToLog("Minimum poles\t" + df.format(_item.getValue())+"[W]", this.filePath);
             }
             else if(written.get(s[0]).equals(true) && s[1].equals("bestCaseMinPoles")){
-                appendToLog("\t" + df.format(_item.getValue())+ "[W]\r\n", this.filePath);
+                appendToLog("\t" + df.format(_item.getValue())+ "[W]", this.filePath);
             }
             else if(written.get(s[0]).equals(true) && s[1].equals("worstCaseMaxPoles")){
-                appendToLog("Maximum poles\t\t" + df.format(_item.getValue())+"[W]", this.filePath);
+                appendToLog("Maximum poles\t" + df.format(_item.getValue())+"[W]", this.filePath);
             }
             else if(written.get(s[0]).equals(true) && s[1].equals("bestCaseMaxPoles")){
+                appendToLog("\t" + df.format(_item.getValue())+ "[W]", this.filePath);
+            } else if(written.get(s[0]).equals(true) && s[1].equals("availWattsMaxPoles")) {
+                appendToLog("\t" + df.format(_item.getValue())+ "[W]\r\n", this.filePath);
+                appendToLog("=================================================\r\n", this.filePath);
+            } else if(written.get(s[0]).equals(true) && s[1].equals("availWattsMinPoles")) {
                 appendToLog("\t" + df.format(_item.getValue())+ "[W]\r\n", this.filePath);
                 appendToLog("\r\n", this.filePath);
             }
-
+            
             //appendToLog(_item.getValue().toString(), this.filePath);
         });
     }
