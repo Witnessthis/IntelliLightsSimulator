@@ -11,8 +11,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.RoundingMode;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -258,21 +260,29 @@ public class Environment {
         data.entrySet().forEach((_item) -> {
 
             String[] s = _item.getKey().split("\\s+");
-
+            DecimalFormat df = new DecimalFormat("#.#");
+            df.setRoundingMode(RoundingMode.FLOOR);
+            
+            
             if (written.get(s[0]).equals(false)) {
-                appendToLog("\r\n"+s[0]+":\r\n", this.filePath);
-                appendToLog("Minimum poles      worst case      best case\r\n", this.filePath);
+                appendToLog(s[0]+":\t\t\tworst case\tbest case\r\n", this.filePath);
                 written.put(s[0], true);
             }
             if(written.get(s[0]).equals(true) && s[1].equals("worstCaseMinPoles")){
-                appendToLog("                   " + _item.getValue().toString(), this.filePath);
+                appendToLog("Minimum poles\t\t" + df.format(_item.getValue())+"[W]", this.filePath);
             }
             else if(written.get(s[0]).equals(true) && s[1].equals("bestCaseMinPoles")){
-                appendToLog("         " + _item.getValue().toString()+"\r\n", this.filePath);
-                appendToLog("Maximum poles      worst case      best case\r\n", this.filePath);
+                appendToLog("\t" + df.format(_item.getValue())+ "[W]\r\n", this.filePath);
+            }
+            else if(written.get(s[0]).equals(true) && s[1].equals("worstCaseMaxPoles")){
+                appendToLog("Maximum poles\t\t" + df.format(_item.getValue())+"[W]", this.filePath);
+            }
+            else if(written.get(s[0]).equals(true) && s[1].equals("bestCaseMaxPoles")){
+                appendToLog("\t" + df.format(_item.getValue())+ "[W]\r\n", this.filePath);
+                appendToLog("\r\n", this.filePath);
             }
 
-            appendToLog(_item.getValue().toString(), this.filePath);
+            //appendToLog(_item.getValue().toString(), this.filePath);
         });
     }
 
