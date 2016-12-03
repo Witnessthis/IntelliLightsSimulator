@@ -106,9 +106,11 @@ public class Environment {
             double dayTime = lookUpDaytime(this.latitude, this.longitude, 
                     getFormattedDate(month, "15"));
             double nightTime = 24 - dayTime;
-            double sensorConsumption = nightTime * sensorWatts;
+            double sensorConsumpitonMax = amountOfPolesMax * nightTime * sensorWatts;
+            double sensorConsumpitonMin = amountOfPolesMin * nightTime * sensorWatts;
             //corresponds to P_avail in the formula pdf (without battery modifier)
-            double availWatts = (dayTime * pmpp) * battEff - sensorConsumption;
+            double availWattsMaxPoles = (dayTime * pmpp) * battEff - sensorConsumpitonMax;
+            double availWattsMinPoles = (dayTime * pmpp) * battEff - sensorConsumpitonMin;
             //worst case most poles (max led power, most cars, slowest cars)
             double worstCaseMaxPoles = calcConsumption(ledPowMax, amountOfPolesMax, poleSpacing, 
                     speedLimitMin, amountOfCarsMax);
@@ -122,10 +124,10 @@ public class Environment {
             double bestCaseMinPoles = calcConsumption(ledPowMin, amountOfPolesMin, poleSpacing, 
                     speedLimitMax, amountOfCarsMin);
             
-            results.put(month + " worstCaseMaxPoles ", availWatts - worstCaseMaxPoles);
-            results.put(month + " bestCaseMaxPoles ", availWatts - bestCaseMaxPoles);
-            results.put(month + " worstCaseMinPoles ", availWatts - worstCaseMinPoles);
-            results.put(month + " bestCaseMinPoles ", availWatts - bestCaseMinPoles);
+            results.put(month + " worstCaseMaxPoles ", availWattsMaxPoles - worstCaseMaxPoles);
+            results.put(month + " bestCaseMaxPoles ", availWattsMaxPoles - bestCaseMaxPoles);
+            results.put(month + " worstCaseMinPoles ", availWattsMinPoles - worstCaseMinPoles);
+            results.put(month + " bestCaseMinPoles ", availWattsMinPoles - bestCaseMinPoles);
         }
         
         
